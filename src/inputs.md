@@ -1,4 +1,8 @@
 # Inputs
+<!--
+Jeremy Ashkenas
+https://observablehq.com/@jashkenas/inputs
+-->
 <div style="margin-top: -3px; font-size: 1.05em;">*a.k.a “The Grand Native Inputs Bazaar”*</div>
 
 <div style="max-width: 500px; margin: 30px 0; padding: 15px 30px; background-color: #ffffee; font: 700 18px/24px sans-serif;">✨ Rejoice! Observable now has <a href="https://observablehq.com/@observablehq/inputs">an official inputs library</a>. If it contains the input you need, you should probably be using that instead of this notebook. ✨</div>
@@ -244,7 +248,7 @@ import {select} from "@jashkenas/inputs"
 
 ```js echo
 // invalidbinding
-const dd = view(() => select(["Spring", "Summer", "Fall", "Winter"]))
+const dd = view(select(["Spring", "Summer", "Fall", "Winter"]))
 ```
 
 ```js echo
@@ -252,7 +256,7 @@ dd
 ```
 
 ```js echo
-const dd1 = view(() => select({
+const dd1 = view(select({
   title: "Stooges",
   description: "Please pick your favorite stooge.",
   options: ["Curly", "Larry", "Moe", "Shemp"],
@@ -265,7 +269,7 @@ dd1
 ```
 
 ```js echo
-const dd2 = view(() => select({
+const dd2 = view(select({
   description: "As a child, which vegetables did you refuse to eat?",
   options: ["Spinach", "Broccoli", "Brussels Sprouts", "Cauliflower", "Kale", "Turnips", "Green Beans", "Asparagus"],
   multiple: true
@@ -365,7 +369,7 @@ import {autoSelect} from "@jashkenas/inputs"
 ```
 
 ```js echo
-const as = view(() => autoSelect({
+const as = view(autoSelect({
   options: usa.objects.states.geometries.map(d => d.properties.name),
   placeholder: "Search for a US state . . ."
 }))
@@ -439,11 +443,11 @@ import {color} from "@jashkenas/inputs"
 ```
 
 ```js echo
-const c = view(() => color())
+const c = view(color())
 ```
 
 ```js
-const c1 = view(() => color({
+const c1 = view(color({
   value: "#0000ff",
   title: "Background Color",
   description: "This color picker starts out blue"
@@ -482,7 +486,7 @@ import {coordinates} from "@jashkenas/inputs"
 ```
 
 ```js echo
-const coords1 = view(() => coordinates())
+const coords1 = view(coordinates())
 ```
 
 ```js echo
@@ -490,7 +494,7 @@ coords1
 ```
 
 ```js echo
-const coords2 = view(() => coordinates({
+const coords2 = view(coordinates({
   title: "Hometown",
   description: "Enter the coordinates of where you were born",
   value: [-122.27, 37.87],
@@ -561,7 +565,7 @@ import {worldMapCoordinates} from "@jashkenas/inputs"
 ```
 
 ```js echo
-const worldMap1 = view(() => worldMapCoordinates([-122.27, 37.87]))
+const worldMap1 = view(worldMapCoordinates([-122.27, 37.87]))
 ```
 
 ```js echo
@@ -653,7 +657,7 @@ import {usaMapCoordinates} from "@jashkenas/inputs"
 ```
 
 ```js echo
-const usaMap1 = view(() => usaMapCoordinates([-122.27, 37.87]))
+const usaMap1 = view(usaMapCoordinates([-122.27, 37.87]))
 ```
 
 ```js echo
@@ -661,7 +665,7 @@ usaMap1
 ```
 
 ```js echo
-const usaMap2 = view(() => usaMapCoordinates({
+const usaMap2 = view(usaMapCoordinates({
   title: "A Mini Map",
   description: "Defaults to New York City",
   width: 200,
@@ -763,11 +767,11 @@ import {date} from "@jashkenas/inputs"
 ```
 
 ```js echo
-const d = view(() => date())
+const d = view(date())
 ```
 
 ```js echo
-const d1 = view(() => date({
+const d1 = view(date({
   title: "2017", 
   min: "2017-01-01",
   max: "2017-12-31",
@@ -803,7 +807,7 @@ import {time} from "@jashkenas/inputs"
 ```
 
 ```js echo
-const t = view(() => time())
+const t = view(time())
 ```
 
 ```js echo
@@ -811,7 +815,7 @@ t
 ```
 
 ```js echo
-const t1 = view(() => time({
+const t1 = view(time({
   title: "Afternoon",
   min: "12:00:00",
   max: "23:59:59",
@@ -851,11 +855,11 @@ const fileDemo = md`---
 ```
 
 ```js echo
-const e = view(() => file())
+const e = view(file())
 ```
 
 ```js
-const e1 = view(() => file({
+const e1 = view(file({
   title: "Photographs",
   description: "Only .jpg files are allowed in this example. Choose some images, and they’ll appear in the cell below.",
   accept: ".jpg",
@@ -914,11 +918,11 @@ import {text} from "@jashkenas/inputs"
 ```
 
 ```js
-const f = view(() => text())
+const f = view(text())
 ```
 
 ```js
-const f1 = view(() => text({title: "A Text Input", placeholder: "Placeholder text", description: "Note that text inputs don’t show output on the right"}))
+const f1 = view(text({title: "A Text Input", placeholder: "Placeholder text", description: "Note that text inputs don’t show output on the right"}))
 ```
 
 ```js
@@ -926,7 +930,7 @@ f1
 ```
 
 ```js
-const f2 = view(() => text({placeholder: "Placeholder text", description: "This input only changes value on submit", submit: "Go"}))
+const f2 = view(text({placeholder: "Placeholder text", description: "This input only changes value on submit", submit: "Go"}))
 ```
 
 ```js
@@ -1241,7 +1245,7 @@ import {number} from "@jashkenas/inputs"
 ```
 
 ```js
-const h = view(() => number())
+const h = view(number())
 ```
 
 ```js
@@ -1249,7 +1253,7 @@ h
 ```
 
 ```js
-const h1 = view(() => number({placeholder: "13+", title: "Your Age", submit: true}))
+const h1 = view(number({placeholder: "13+", title: "Your Age", submit: true}))
 ```
 
 ```js
