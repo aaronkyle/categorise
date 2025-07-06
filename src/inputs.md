@@ -1,5 +1,4 @@
-```js
-md`# Inputs
+# Inputs
 <div style="margin-top: -3px; font-size: 1.05em;">*a.k.a “The Grand Native Inputs Bazaar”*</div>
 
 <div style="max-width: 500px; margin: 30px 0; padding: 15px 30px; background-color: #ffffee; font: 700 18px/24px sans-serif;">✨ Rejoice! Observable now has <a href="https://observablehq.com/@observablehq/inputs">an official inputs library</a>. If it contains the input you need, you should probably be using that instead of this notebook. ✨</div>
@@ -26,10 +25,9 @@ Wares we have on offer:
   * [\`checkbox\`](#checkboxDemo)
   * [\`number\`](#numberDemo)
   * [\`password\`](#passwordDemo)`
-```
 
-```js
-md`| <h3>Friends & Family:</h3>  |   |
+
+| <h3>Friends & Family:</h3>  |   |
 |---|---|
 | **[@mbostock/form-input](/@mbostock/form-input)**  | Fully custom forms, combining inputs into a single reactive cell. |
 | **[@mbostock/scrubber](/@mbostock/scrubber)** | A slider that automatically plays through its range, useful for driving and scrubbing through animations. |
@@ -51,10 +49,36 @@ md`| <h3>Friends & Family:</h3>  |   |
 | **[@j-f1/checkbox](/@j-f1/checkbox)** | A simple checkbox input that provides a boolean value. |
 
 <br>*If you have any improvements for the bazaar, [please make your change in a fork and send it to me as a suggestion.](https://observablehq.com/@observablehq/suggestions-and-comments)*`
+
+
+```js
+//https://observablehq.observablehq.cloud/pangea/party/markdown-it
+import markdownit from "markdown-it";
+import matter from "npm:gray-matter";
 ```
 
 ```js
-sliderDemo = md`---
+const Markdown = new markdownit({html: true});
+
+//const md = {
+//  unsafe(string) {
+//    const template = document.createElement("template");
+//   template.innerHTML = Markdown.render(string);
+//    return template.content.cloneNode(true);
+//  }
+//};
+
+function md(strings, ...values) {
+  const raw = strings.reduce((acc, str, i) => acc + str + (values[i] ?? ""), "");
+  const template = document.createElement("template");
+  template.innerHTML = Markdown.render(raw);
+  return template.content.cloneNode(true);
+}
+```
+
+
+```js
+const sliderDemo = md`---
 ## Sliders
 
 ~~~js
@@ -63,31 +87,31 @@ import {slider} from "@jashkenas/inputs"
 ```
 
 ```js
-viewof a = slider()
+const a = view(slider())
 ```
 
 ```js
-viewof a1 = slider({
+const a1 = view(slider({
   min: 0, 
   max: 1, 
   step: 0.01, 
   format: ".0%",
   description: "Zero to one, formatted as a percentage"
-})
+}))
 ```
 
-```js
-viewof a1_1 = slider({
+```js echo
+const a1_1 = view(slider({
   min: 0, 
   max: 1, 
   step: 0.01, 
   format: v => `${Math.round(100 * v)} per cent`,
   description: "Zero to one, formatted with a custom function"
-})
+}))
 ```
 
 ```js
-viewof a2 = slider({
+const a2 = view(slider({
   min: 0,
   max: 1e9,
   step: 1000,
@@ -95,42 +119,41 @@ viewof a2 = slider({
   format: ",",
   description:
     "Zero to one billion, in steps of one thousand, formatted as a (US) number"
-})
+}))
 ```
 
 ```js
-viewof a3 = slider({
+const a3 = view(slider({
   min: 0, 
   max: 100, 
   step: 1, 
   value: 10, 
   title: "Integers", 
   description: "Integers from zero through 100"
-})
+}))
 ```
 
 ```js
-viewof a4 = slider({
+const a4 = view(slider({
   min: 0.9,
   max: 1.1,
   precision: 3,
   description: "A high precision slider example"
-})
+}))
 ```
 
 ```js
-viewof a5 = slider({
+const a5 = view(slider({
   min: 0.9,
   max: 1.1,
   precision: 3,
   submit: true,
   description: "The same as a4, but only changes value on submit"
-})
+}))
 ```
 
-```js
-md`More [fancy slider techniques](https://observablehq.com/@mootari/prime-numbers-slider).`
-```
+More [fancy slider techniques](https://observablehq.com/@mootari/prime-numbers-slider)
+
 
 ```js
 function slider(config = {}) {
@@ -164,8 +187,8 @@ function slider(config = {}) {
 }
 ```
 
-```js
-buttonDemo = md`---
+```js echo
+const buttonDemo = md`---
 ## Buttons
 
 ~~~js
@@ -173,29 +196,31 @@ import {button} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof b = button()
+```js echo
+const b = view(button())
 ```
 
-```js
-{
-  b
+```js echo
+(() => {
+  b;
   return !this;
-}
+})()
 ```
 
 ```js
-viewof b1 = button({value: "Click me", description: "We use a reference to the button below to record the time you pressed it."})
+const b1 = view(button({value: "Click me", description: "We use a reference to the button below to record the time you pressed it."}))
 ```
 
-```js
+```js echo
+(() => {
 {
   b1;
   return new Date(Date.now()).toUTCString()
 }
+})()
 ```
 
-```js
+```js echo
 function button(config = {}) {
   const {
     value = "Ok", title, description, disabled
@@ -209,8 +234,8 @@ function button(config = {}) {
 }
 ```
 
-```js
-selectDemo = md`---
+```js echo
+const selectDemo = md`---
 ## Dropdown Menus and Multiselects
 
 ~~~js
@@ -218,41 +243,42 @@ import {select} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof dd = select(["Spring", "Summer", "Fall", "Winter"])
+```js echo
+// invalidbinding
+const dd = view(() => select(["Spring", "Summer", "Fall", "Winter"]))
 ```
 
-```js
+```js echo
 dd
 ```
 
-```js
-viewof dd1 = select({
+```js echo
+const dd1 = view(() => select({
   title: "Stooges",
   description: "Please pick your favorite stooge.",
   options: ["Curly", "Larry", "Moe", "Shemp"],
   value: "Moe"
-})
+}))
 ```
 
 ```js
 dd1
 ```
 
-```js
-viewof dd2 = select({
+```js echo
+const dd2 = view(() => select({
   description: "As a child, which vegetables did you refuse to eat?",
   options: ["Spinach", "Broccoli", "Brussels Sprouts", "Cauliflower", "Kale", "Turnips", "Green Beans", "Asparagus"],
   multiple: true
-})
+}))
 ```
 
-```js
+```js echo
 dd2
 ```
 
-```js
-viewof dd3 = {
+```js echo
+const dd3 = view(() =>{
   const dd3 = select({
     title: "How are you feeling today?",
     options: [
@@ -269,14 +295,16 @@ viewof dd3 = {
   dd3.input.style.fontSize = "30px";
   dd3.input.style.marginTop = "8px";
   return dd3;
-}
+})
 ```
 
-```js
+
+
+```js echo
 dd3
 ```
 
-```js
+```js echo
 function select(config = {}) {
   let {
     value: formValue,
@@ -328,7 +356,7 @@ function select(config = {}) {
 ```
 
 ```js
-autoSelectDemo = md`---
+const autoSelectDemo = md`---
 ## Autoselects
 *A variant of an option menu, using an autocompleting text input, via HTML’s datalist element.* 
 
@@ -337,14 +365,14 @@ import {autoSelect} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof as = autoSelect({
+```js echo
+const as = view(() => autoSelect({
   options: usa.objects.states.geometries.map(d => d.properties.name),
   placeholder: "Search for a US state . . ."
-})
+}))
 ```
 
-```js
+```js echo
 as
 ```
 
@@ -401,7 +429,7 @@ function autoSelect(config = {}) {
 ```
 
 ```js
-colorDemo = md`---
+const colorDemo = md`---
 ## Color Pickers
 
 *value: a hexadecimal string, e.g. * \`"#bada55"\` 
@@ -411,19 +439,19 @@ import {color} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof c = color()
+```js echo
+const c = view(() => color())
 ```
 
 ```js
-viewof c1 = color({
+const c1 = view(() => color({
   value: "#0000ff",
   title: "Background Color",
   description: "This color picker starts out blue"
-})
+}))
 ```
 
-```js
+```js 
 function color(config = {}) {
   const { value = "#000000", title, description, disabled, submit, display } =
     typeof config === "string" ? { value: config } : config;
@@ -444,7 +472,7 @@ function color(config = {}) {
 ```
 
 ```js
-coordinatesDemo = md` ---
+const coordinatesDemo = md` ---
 ## Coordinates
 
 *value: an array pair of \`[longitude, latitude]\`, e.g. * \`[-122.27, 37.87]\` 
@@ -454,24 +482,24 @@ import {coordinates} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof coords1 = coordinates()
+```js echo
+const coords1 = view(() => coordinates())
 ```
 
-```js
+```js echo
 coords1
 ```
 
-```js
-viewof coords2 = coordinates({
+```js echo
+const coords2 = view(() => coordinates({
   title: "Hometown",
   description: "Enter the coordinates of where you were born",
   value: [-122.27, 37.87],
   submit: true
-})
+}))
 ```
 
-```js
+```js echo
 coords2
 ```
 
@@ -514,8 +542,16 @@ function coordinates(config = {}) {
 }
 ```
 
-```js
-worldMapCoordinatesDemo = md` ---
+
+```js echo
+//added/
+import {DOM} from "/components/DOM.js";
+
+```
+
+
+```js echo
+const worldMapCoordinatesDemo = md` ---
 ## World Map Coordinates
 
 *value: an array pair of \`[longitude, latitude]\`, e.g. * \`[-122.27, 37.87]\` 
@@ -525,11 +561,11 @@ import {worldMapCoordinates} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof worldMap1 = worldMapCoordinates([-122.27, 37.87])
+```js echo
+const worldMap1 = view(() => worldMapCoordinates([-122.27, 37.87]))
 ```
 
-```js
+```js echo
 worldMap1
 ```
 
@@ -606,8 +642,8 @@ function worldMapCoordinates(config = {}) {
 }
 ```
 
-```js
-usaMapCoordinatesDemo = md` ---
+```js echo
+const usaMapCoordinatesDemo = md` ---
 ## U.S.A. Map Coordinates
 
 *value: an array pair of \`[longitude, latitude]\`, e.g. * \`[-122.27, 37.87]\` 
@@ -617,24 +653,24 @@ import {usaMapCoordinates} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof usaMap1 = usaMapCoordinates([-122.27, 37.87])
+```js echo
+const usaMap1 = view(() => usaMapCoordinates([-122.27, 37.87]))
 ```
 
-```js
+```js echo
 usaMap1
 ```
 
-```js
-viewof usaMap2 = usaMapCoordinates({
+```js echo
+const usaMap2 = view(() => usaMapCoordinates({
   title: "A Mini Map",
   description: "Defaults to New York City",
   width: 200,
   value: [-74, 40.71]
-})
+}))
 ```
 
-```js
+```js echo
 usaMap2
 ```
 
@@ -716,8 +752,8 @@ function usaMapCoordinates(config = {}) {
 }
 ```
 
-```js
-dateDemo = md` ---
+```js echo
+const dateDemo = md` ---
 ## Dates
 
 *value: a YYYY-MM-DD formatted string: * \`"2016-11-08"\` 
@@ -728,17 +764,17 @@ import {date} from "@jashkenas/inputs"
 ```
 
 ```js
-viewof d = date()
+const d = View(() => date())
 ```
 
 ```js
-viewof d1 = date({
+const d1 = view(() => date({
   title: "2017", 
   min: "2017-01-01",
   max: "2017-12-31",
   value: "2017-01-01",
   description: "Only dates within the 2017 calendar year are allowed"
-})
+}))
 ```
 
 ```js
@@ -755,8 +791,8 @@ function date(config = {}) {
 }
 ```
 
-```js
-timeDemo = md` ---
+```js echo
+const timeDemo = md` ---
 ## Times
 
 *value: a HH:MM:SS formatted string: * \`"09:30:45"\`
@@ -767,23 +803,23 @@ import {time} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof t = time()
+```js echo
+const t = view(() => time())
 ```
 
-```js
+```js echo
 t
 ```
 
-```js
-viewof t1 = time({
+```js echo
+const t1 = view(() => time({
   title: "Afternoon",
   min: "12:00:00",
   max: "23:59:59",
   value: "13:00:00",
   step: 1,
   description: "Only times after noon are allowed, and seconds are included"
-})
+}))
 ```
 
 ```js
@@ -807,29 +843,35 @@ function time(config = {}) {
 }
 ```
 
-```js
-fileDemo = md`---
+```js echo
+const fileDemo = md`---
 ## File Upload
 *Use the JavaScript [File API](https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications) to work with uploaded file contents.*
 
 \`import {file} from "@jashkenas/inputs"\``
 ```
 
-```js
-viewof e = file()
+```js echo
+const e = view(() => file())
 ```
 
 ```js
-viewof e1 = file({
+const e1 = view(() => file({
   title: "Photographs",
   description: "Only .jpg files are allowed in this example. Choose some images, and they’ll appear in the cell below.",
   accept: ".jpg",
   multiple: true,
-})
+}))
 ```
 
+
 ```js
-{
+//added
+import { Files } from "@observablehq/stdlib";
+```
+
+```js echo
+async () => {
   const div = html`<div>`;
   for (var j = 0; j < e1.length; j++) {
     let file = e1[j];
@@ -840,6 +882,7 @@ viewof e1 = file({
   return div;
 }
 ```
+
 
 ```js
 function file(config = {}) {
@@ -862,8 +905,8 @@ function file(config = {}) {
 }
 ```
 
-```js
-textDemo = md`---
+```js echo
+const textDemo = md`---
 ## Text Inputs
 
 ~~~js
@@ -872,11 +915,11 @@ import {text} from "@jashkenas/inputs"
 ```
 
 ```js
-viewof f = text()
+const f = view(() => text())
 ```
 
 ```js
-viewof f1 = text({title: "A Text Input", placeholder: "Placeholder text", description: "Note that text inputs don’t show output on the right"})
+const f1 = view(() => text({title: "A Text Input", placeholder: "Placeholder text", description: "Note that text inputs don’t show output on the right"}))
 ```
 
 ```js
@@ -884,7 +927,7 @@ f1
 ```
 
 ```js
-viewof f2 = text({placeholder: "Placeholder text", description: "This input only changes value on submit", submit: "Go"})
+const f2 = view(() => text({placeholder: "Placeholder text", description: "This input only changes value on submit", submit: "Go"}))
 ```
 
 ```js
@@ -930,8 +973,8 @@ function text(config = {}) {
 }
 ```
 
-```js
-textareaDemo = md`---
+```js echo
+const textareaDemo = md`---
 ## Textareas
 
 ~~~js
@@ -939,23 +982,23 @@ import {textarea} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof g = textarea()
+```js echo
+const g = view(() =>textarea())
 ```
 
-```js
+```js echo
 g
 ```
 
-```js
-viewof g1 = textarea({
+```js echo
+const g1 = view(() =>textarea({
   title: "Your Great American Novel", 
   placeholder: "Insert story here...", 
   spellcheck: true,
   width: "100%",
   rows: 10,
   submit: "Publish"
-})
+}))
 ```
 
 ```js
@@ -1008,7 +1051,7 @@ function textarea(config = {}) {
 ```
 
 ```js
-radioDemo = md`---
+const radioDemo = md`---
 ## Radio Buttons
 
 ~~~js
@@ -1017,7 +1060,7 @@ import {radio} from "@jashkenas/inputs"
 ```
 
 ```js
-viewof r = radio(["Lust", "Gluttony", "Greed", "Sloth", "Wrath", "Envy", "Pride"])
+const r = view(() =>radio(["Lust", "Gluttony", "Greed", "Sloth", "Wrath", "Envy", "Pride"]))
 ```
 
 ```js
@@ -1025,7 +1068,7 @@ r
 ```
 
 ```js
-viewof r1 = radio({
+const r1 = view(() =>radio({
   title: 'Contact Us',
   description: 'Please select your preferred contact method',
   options: [
@@ -1034,7 +1077,7 @@ viewof r1 = radio({
     { label: 'By Pager', value: 'pager' },
   ],
   value: 'pager'
-})
+}))
 ```
 
 ```js
@@ -1089,8 +1132,8 @@ function radio(config = {}) {
 }
 ```
 
-```js
-checkboxDemo = md`---
+```js echo
+const checkboxDemo = md`---
 ## Checkboxes
 
 ~~~js
@@ -1098,16 +1141,16 @@ import {checkbox} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof ch = checkbox(["Lust", "Gluttony", "Greed", "Sloth", "Wrath", "Envy", "Pride"])
+```js echo
+const ch = view(() =>checkbox(["Lust", "Gluttony", "Greed", "Sloth", "Wrath", "Envy", "Pride"]))
 ```
 
-```js
+```js echo
 ch
 ```
 
-```js
-viewof ch1 = checkbox({
+```js echo
+const ch1 = view(() =>checkbox({
   title: "Colors",
   description: "Please select your favorite colors",
   options: [
@@ -1121,22 +1164,22 @@ viewof ch1 = checkbox({
   ],
   value: ["r", "g", "b"],
   submit: true
-})
+}))
 ```
 
-```js
+```js echo
 ch1
 ```
 
-```js
-viewof ch3 = checkbox({
+```js echo
+const ch3 = view(() =>checkbox({
   description: "Just a single checkbox to toggle",
   options: [{ value: "toggle", label: "On" }],
   value: "toggle"
-})
+}))
 ```
 
-```js
+```js echo
 ch3
 ```
 
@@ -1190,7 +1233,7 @@ function checkbox(config = {}) {
 ```
 
 ```js
-numberDemo = md`---
+const numberDemo = md`---
 ## Numbers
 
 ~~~js
@@ -1199,7 +1242,7 @@ import {number} from "@jashkenas/inputs"
 ```
 
 ```js
-viewof h = number()
+const h = view(() => number())
 ```
 
 ```js
@@ -1207,7 +1250,7 @@ h
 ```
 
 ```js
-viewof h1 = number({placeholder: "13+", title: "Your Age", submit: true})
+const h1 = view(() => number({placeholder: "13+", title: "Your Age", submit: true}))
 ```
 
 ```js
@@ -1253,8 +1296,8 @@ function number(config = {}) {
 }
 ```
 
-```js
-passwordDemo = md`---
+```js echo
+const passwordDemo = md`---
 ## Passwords
 
 ~~~js
@@ -1262,21 +1305,21 @@ import {password} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-viewof i = password({value: "password"})
+```js echo
+const i = view(password({value: "password"}))
 ```
 
-```js
+```js echo
 i
 ```
 
-```js
-viewof i1 = password({
+```js echo
+const i1 = view(password({
   title: "Your super secret password", 
   description: "Less than 12 characters, please.",
   minlength: 6,
   maxlength: 12
-})
+}))
 ```
 
 ```js
@@ -1421,52 +1464,59 @@ function input(config) {
 ```
 
 ```js
-d3geo = require("d3-geo@1")
+import {require} from "npm:d3-require";
+```
+
+
+```js
+const d3geo = require("d3-geo@1")
 ```
 
 ```js
-d3format = require("d3-format@1")
+const d3format = require("d3-format@1")
 ```
 
 ```js
-topojson = require("topojson-client@3")
+const topojson = require("topojson-client@3")
 ```
 
 ```js
-world = (await fetch("https://cdn.jsdelivr.net/npm/world-atlas@1/world/110m.json")).json()
+const world = (await fetch("https://cdn.jsdelivr.net/npm/world-atlas@1/world/110m.json")).json()
 ```
 
 ```js
-land = topojson.feature(world, world.objects.land)
+const land = topojson.feature(world, world.objects.land)
 ```
 
 ```js
-countries = topojson.feature(world, world.objects.countries)
+const countries = topojson.feature(world, world.objects.countries)
 ```
 
-```js
-usa = (await fetch("https://cdn.jsdelivr.net/npm/us-atlas@^2.1/us/states-10m.json")).json()
+```js echo
+const usa = (await fetch("https://cdn.jsdelivr.net/npm/us-atlas@^2.1/us/states-10m.json")).json()
 ```
 
-```js
-nation = topojson.feature(usa, usa.objects.nation)
+```js echo
+const nation = topojson.feature(usa, usa.objects.nation)
 ```
 
-```js
-states = topojson.feature(usa, usa.objects.states)
+```js echo
+const states = topojson.feature(usa, usa.objects.states)
 ```
 
-```js
-graticule = d3geo.geoGraticule10()
+```js echo
+const graticule = d3geo.geoGraticule10()
 ```
 
-```js
-viewof license = {
+```js echo
+// formerly was view
+const license = (() =>  {
   const license = md`License: [MIT](https://opensource.org/licenses/MIT)`;
   license.value = "MIT";
   return license;
-}
+})()
 ```
+
 
 ```js
 md`*Clip art courtesy [ClipArt ETC](https://etc.usf.edu/clipart/), radio buttons and checkboxes courtesy [Amit Sch](https://observablehq.com/@meetamit/multiple-choice-inputs).*`
