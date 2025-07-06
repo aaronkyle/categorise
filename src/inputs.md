@@ -3,7 +3,6 @@
 
 <div style="max-width: 500px; margin: 30px 0; padding: 15px 30px; background-color: #ffffee; font: 700 18px/24px sans-serif;">✨ Rejoice! Observable now has <a href="https://observablehq.com/@observablehq/inputs">an official inputs library</a>. If it contains the input you need, you should probably be using that instead of this notebook. ✨</div>
 
-<img width="350px" src="${await FileAttachment("capstan.gif").url()}" />
 
 A collection of assorted fancy inputs, odds and ends — with which to produce values to feed your burgeoning sketches. All inputs support optional **titles** and **descriptions**; where it makes sense, inputs also support a **submit** option, which allows you to prevent the value from updating until the input has been finalized.
 
@@ -763,11 +762,11 @@ import {date} from "@jashkenas/inputs"
 ~~~`
 ```
 
-```js
-const d = View(() => date())
+```js echo
+const d = view(() => date())
 ```
 
-```js
+```js echo
 const d1 = view(() => date({
   title: "2017", 
   min: "2017-01-01",
@@ -777,7 +776,7 @@ const d1 = view(() => date({
 }))
 ```
 
-```js
+```js echo
 function date(config = {}) {
   const { min, max, value, title, description, disabled, display } =
     typeof config === "string" ? { value: config } : config;
