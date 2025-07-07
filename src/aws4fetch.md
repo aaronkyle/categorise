@@ -1,10 +1,13 @@
 # [aws4fetch](https://github.com/mhart/aws4fetch)
-```js
+
+```
+~~~js
     import {AwsClient, AwsV4Signer} from '@tomlarkworthy/aws4fetch'
+~~~
 ```
 
-```js
-aws4fetch = {
+```js echo
+const aws4fetch = async () => {
   const response = await new Response(
     (
       await FileAttachment("aws4fetch.esm.js.gz").stream()
@@ -24,10 +27,20 @@ aws4fetch = {
 }
 ```
 
-```js
-AwsClient = aws4fetch.AwsClient
-```
 
 ```js
-AwsV4Signer = aws4fetch.AwsV4Signer
+display(AwsClient)
+```
+
+```js echo
+const AwsClient = aws4fetch.AwsClient
+```
+
+
+```js
+display(AwsV4Signer)
+```
+
+```js echo
+const AwsV4Signer = aws4fetch.AwsV4Signer
 ```

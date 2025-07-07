@@ -2,12 +2,14 @@
 
 A view whose value is a DOM node, and whose view is a container of that value. 
 
-```js
+```
+~~~js
 import {domView} from '@tomlarkworthy/dom-view'
+~~~
 ```
 
 ```js echo
-domView = ({ className = "" } = {}) => {
+const domView = ({ className = "" } = {}) => {
   const dom = document.createElement("div");
   dom.className = className;
   dom.value = undefined;
@@ -24,13 +26,9 @@ domView = ({ className = "" } = {}) => {
 ```
 
 ```js echo
-viewof example = domView()
+const example = display(domView())
 ```
 
 ```js echo
-(viewof example.value = html`<button>❤️</button>`)
-```
-
-```js echo
-
+(example.value = html`<button>❤️</button>`)
 ```

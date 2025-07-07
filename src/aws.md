@@ -1,13 +1,8 @@
-```js
-md`# AWS Helpers
-`
-```
-
-```js
-md`
+# AWS Helpers
 
 Store AWS credentials in local storage and call the AWS SDK. So far we have added IAM, S3 and CloudFront. If you need more SDK methods, create an web SDK distribution using https://sdk.amazonaws.com/builder/js/ 
 
+```
 ~~~js
   import {
     iam, s3,
@@ -19,11 +14,14 @@ Store AWS credentials in local storage and call the AWS SDK. So far we have adde
     listUserTags, tagUser, untagUser
   } with {REGION as REGION} from '@tomlarkworthy/aws'
 ~~~
+```
 
 I am a big fan of using resource tagging to provide attribute based access control (ABAC), as an alternative to API Gateway. With IAM policies, you can add a tag to an s3 object, and a tag to a user account, and express that "only users with the matching tag can access the file". Using wildcards and StringLike expressions, you can tag a user account with all projects they can access, and let them create files only with a matching project prefix.
 
 For example, the following AWS policy rule allows the authenticated IAM user (a.k.a. the Principle) to create a file with a "project" tag that matches one of the projects in their tag "projects" (space prefixed/suffixed/delimited) list.
-~~~
+
+```
+~~~js
 {
     "Effect": "Allow",
     "Action": [
@@ -38,42 +36,41 @@ For example, the following AWS policy rule allows the authenticated IAM user (a.
     }
 }
 ~~~
+```
 
 With the right IAM User Group policies and this AWS SDK wrapper you can build a quite powerful multi-tenancy file storage system without API gateway. Kinda like a Firebase Storage-lite. Don't underestimate tagging! For more info check out Amazon's documentation. 
 
 https://docs.aws.amazon.com/AmazonS3/latest/userguide/tagging-and-policies.html
 
-`
+
+```js echo
+//const constAWS = import(await FileAttachment("aws-sdk-2.983.0.min.js").url()).then(
+//  (_) => window["AWS"])
+
+const AWS = import("https://unpkg.com/aws-sdk@2.983.0/dist/aws-sdk.min.js").then(() => window.AWS)
+
 ```
 
-```js
-AWS = require(await FileAttachment("aws-sdk-2.983.0.min.js").url()).then(
-  (_) => window["AWS"]
-)
-```
-
-```js
-md`# Credentials
+# Credentials
 
 A credentials file can be used to derive *access_tokens* for SDK calls.
+```
 ~~~js
 { 
   "accessKeyId": <YOUR_ACCESS_KEY_ID>,
   "secretAccessKey": <YOUR_SECRET_ACCESS_KEY>
 }
 ~~~
-`
 ```
 
-```js
-md`## Input credentials
+
+## Input credentials
 
 Not persisted or shared outside of your local network. Paste an unencrypted JSON of your credentials in the following box to authenticate.
-`
-```
 
-```js
-viewof manualCredentials = {
+
+```js echo
+const manualCredentials = () => view(() => {
   const existingCreds = localStorage.getItem(
     `AWS_CREDS_${btoa(htl.html`<a href>`.href.split("?")[0])}`
   );
@@ -92,21 +89,22 @@ viewof manualCredentials = {
         ${
           existingCreds
             ? `
-                color: transparent;
-                text-shadow: 0 0 4px rgba(0,0,0,0.5);
-              `
-            : null
+              color: transparent;
+              text-shadow: 0 0 4px rgba(0,0,0,0.5);
+            `
+            : ''
         }
       }
     </style>
     ${control}`;
+
   Inputs.bind(wrapped, control);
   return wrapped;
-}
+});
 ```
 
-```js
-saveCreds = htl.html`<span style="display: flex">${Inputs.button(
+```js echo
+const saveCreds = htl.html`<span style="display: flex">${Inputs.button(
   "Save creds to local storage",
   {
     reduce: () =>
@@ -123,14 +121,13 @@ saveCreds = htl.html`<span style="display: flex">${Inputs.button(
 })}</span>`
 ```
 
-```js
-md`## Credentials`
-```
+## Credentials
 
-```js
-credentials = Generators.observe(next => {
+
+```js echo
+const credentials = Generators.observe((next) => {
   const check = () => {
-    const creds = viewof manualCredentials.value;
+    const creds = manualCredentials.value; // ✅ Corrected this line
     try {
       expect(creds).toBeDefined();
       const parsed = JSON.parse(creds);
@@ -138,49 +135,46 @@ credentials = Generators.observe(next => {
       expect(parsed).toHaveProperty("secretAccessKey");
       next(parsed);
     } catch (err) {
-      //next(err);
+      // Credentials invalid or missing
     }
   };
 
-  viewof manualCredentials.addEventListener('input', check);
+  manualCredentials.addEventListener("input", check); // ✅ Also removed `viewof`
   invalidation.then(() => {
-    viewof manualCredentials.removeEventListener('input', check);
+    manualCredentials.removeEventListener("input", check);
   });
-  check();
-})
+
+  check(); // Run once immediately
+});
+
 ```
 
-```js
-md`Use creds in SDK`
-```
+Use creds in SDK`
 
-```js
-login = {
+```js echo
+const login = () => {
   AWS.config.credentials = credentials;
 }
 ```
 
-```js
-md`# IAM`
-```
+# IAM
 
 ```js
-iam = login || new AWS.IAM()
+const iam = login || new AWS.IAM()
 ```
 
-```js
-md`##### Users`
-```
+##### Users
+
 
 ```js echo
-listUsers = async () => {
+const listUsers = async () => {
   const response = await iam.listUsers().promise();
   return response.Users;
 }
 ```
 
 ```js echo
-createUser = async username => {
+const createUser = async username => {
   const response = await iam
     .createUser({
       UserName: username
@@ -191,7 +185,7 @@ createUser = async username => {
 ```
 
 ```js echo
-deleteUser = async username => {
+const deleteUser = async username => {
   const response = await iam
     .deleteUser({
       UserName: username
@@ -201,7 +195,7 @@ deleteUser = async username => {
 ```
 
 ```js echo
-getUser = async username => {
+const getUser = async username => {
   const response = await iam
     .getUser({
       ...(username && { UserName: username })
@@ -211,12 +205,10 @@ getUser = async username => {
 }
 ```
 
-```js
-md`##### Access Keys`
-```
+##### Access Keys
 
 ```js echo
-listAccessKeys = async username => {
+const listAccessKeys = async username => {
   const response = await iam
     .listAccessKeys({
       UserName: username
@@ -228,7 +220,7 @@ listAccessKeys = async username => {
 
 ```js echo
 /*https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/IAM.html#createAccessKey-property*/
-createAccessKey = async username => {
+const createAccessKey = async username => {
   const response = await iam
     .createAccessKey({
       UserName: username
@@ -239,7 +231,7 @@ createAccessKey = async username => {
 ```
 
 ```js echo
-deleteAccessKey = async (username, accessKeyId) => {
+const deleteAccessKey = async (username, accessKeyId) => {
   const response = await iam
     .deleteAccessKey({
       UserName: username,
@@ -249,12 +241,10 @@ deleteAccessKey = async (username, accessKeyId) => {
 }
 ```
 
-```js
-md`##### User Tags`
-```
+##### User Tags
 
 ```js echo
-listUserTags = async username => {
+const listUserTags = async username => {
   const response = await iam
     .listUserTags({
       UserName: username
@@ -270,7 +260,7 @@ listUserTags = async username => {
 
 ```js echo
 // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/IAM.html#tagUser-property
-tagUser = async (username, tagDictionary) => {
+const tagUser = async (username, tagDictionary) => {
   const response = await iam
     .tagUser({
       Tags: Object.entries(tagDictionary).map(e => ({
@@ -285,7 +275,7 @@ tagUser = async (username, tagDictionary) => {
 ```
 
 ```js echo
-untagUser = async (username, keyArray) => {
+const untagUser = async (username, keyArray) => {
   const response = await iam
     .untagUser({
       TagKeys: keyArray,
@@ -296,19 +286,17 @@ untagUser = async (username, keyArray) => {
 }
 ```
 
-```js
-md`##### IAM User groups`
-```
+##### IAM User groups`
 
 ```js echo
-listGroups = async username => {
+const listGroups = async username => {
   const response = await iam.listGroups().promise();
   return response.Groups;
 }
 ```
 
 ```js echo
-listGroupsForUser = async username => {
+const listGroupsForUser = async username => {
   const response = await iam
     .listGroupsForUser({
       UserName: username
@@ -319,7 +307,7 @@ listGroupsForUser = async username => {
 ```
 
 ```js echo
-addUserToGroup = async (username, group) => {
+const addUserToGroup = async (username, group) => {
   return await iam
     .addUserToGroup({
       UserName: username,
@@ -330,7 +318,7 @@ addUserToGroup = async (username, group) => {
 ```
 
 ```js echo
-removeUserFromGroup = async (username, group) => {
+const removeUserFromGroup = async (username, group) => {
   return await iam
     .removeUserFromGroup({
       UserName: username,
@@ -340,29 +328,24 @@ removeUserFromGroup = async (username, group) => {
 }
 ```
 
-```js
-md`# S3
+# S3
 
-`
+
+
+S3 service doesn't work until you set a region, and you cannot create buckets through the SDK, you have to set them up in the console first, but you can add and remove files from a pre-existing bucket
+
+```js
+const REGION = 'us-east-2'
 ```
 
 ```js
-md`S3 service doesn't work until you set a region, and you cannot create buckets through the SDK, you have to set them up in the console first, but you can add and remove files from a pre-existing bucket`
+const s3 = login || new AWS.S3({ region: REGION })
 ```
 
-```js
-REGION = 'us-east-2'
-```
-
-```js
-s3 = login || new AWS.S3({ region: REGION })
-```
-
-```js
-md`### CORS
+### CORS
 
 AWS S3 SDK does not work until you enable a CORS policy in the bucket permissions
-
+```
 ~~~js
 [
     {
@@ -382,7 +365,6 @@ AWS S3 SDK does not work until you enable a CORS policy in the bucket permission
     }
 ]
 ~~~
-`
 ```
 
 ```js echo
@@ -398,7 +380,7 @@ async function hasBucket(name) {
 ```
 
 ```js echo
-listObjects = async function (bucket, prefix = undefined, options = {}) {
+const listObjects = async function (bucket, prefix = undefined, options = {}) {
   const response = await s3
     .listObjectsV2({
       Bucket: bucket,
@@ -412,7 +394,7 @@ listObjects = async function (bucket, prefix = undefined, options = {}) {
 ```
 
 ```js echo
-getObject = async (bucket, path) => {
+const getObject = async (bucket, path) => {
   const response = await s3
     .getObject({
       Bucket: bucket,
@@ -424,7 +406,7 @@ getObject = async (bucket, path) => {
 ```
 
 ```js echo
-putObject = async (bucket, path, value, options) => {
+const putObject = async (bucket, path, value, options) => {
   const s3Options = { ...options };
   delete s3Options["tags"];
   return s3
@@ -443,18 +425,16 @@ putObject = async (bucket, path, value, options) => {
 }
 ```
 
-```js echo
-md`# CloudFront
+# CloudFront
 
-`
+
+
+```js echo
+const cloudFront = login || new AWS.CloudFront()
 ```
 
 ```js echo
-cloudFront = login || new AWS.CloudFront()
-```
-
-```js echo
-createInvalidation = (distributionId, paths = []) => {
+const createInvalidation = (distributionId, paths = []) => {
   const operationId = randomId(16);
   return cloudFront
     .createInvalidation({
@@ -471,26 +451,70 @@ createInvalidation = (distributionId, paths = []) => {
 }
 ```
 
+---
+
+
 ```js
-md`---`
+import { expect } from '/exports/testing/index.js'
 ```
 
 ```js
-import { expect } from '@tomlarkworthy/testing'
+import { randomId } from '/exports/randomid.tgz'
 ```
 
 ```js
-import { randomId } from '@tomlarkworthy/randomid'
+import { resize } from '/exports/resize.tgz'
 ```
 
 ```js
-import { resize } from '@endpointservices/resize'
+import { localStorage } from "/exports/safe-local-storage.tgz"
 ```
 
 ```js
-import { localStorage } from "@mbostock/safe-local-storage"
+import { signature } from '/exports/signature.tgz'
 ```
 
-```js
-import { signature } from '@mootari/signature'
+
+
+```
+EXPERIMENTAL:
+//You must include untar-js in your project (npm install untar-js).
+import untar from "untar-js";
+import { FileAttachment } from "observablehq:std";
+
+export async function loadTgzModule(attachmentName, entryMatch = /index\.js$/) {
+  const buf = await FileAttachment(attachmentName).arrayBuffer();
+  const files = await untar(new Uint8Array(buf));
+
+  const entry = files.find(f => entryMatch.test(f.name));
+  if (!entry) throw new Error(`Entry file not found in ${attachmentName}`);
+
+  const jsCode = new TextDecoder().decode(entry.buffer);
+  const blob = new Blob([jsCode], { type: "application/javascript" });
+  const objectURL = URL.createObjectURL(blob);
+
+  try {
+    return await import(objectURL);
+  } finally {
+    URL.revokeObjectURL(objectURL);
+  }
+}
+```
+
+
+```
+export const testing = await loadTgzModule("testing.tgz");
+export const randomid = await loadTgzModule("randomid.tgz");
+export const resize = await loadTgzModule("resize.tgz");
+export const safeLocalStorage = await loadTgzModule("safe-local-storage.tgz");
+export const signature = await loadTgzModule("signature.tgz");
+```
+
+```
+USAGE
+testing.expect(...);
+randomid.randomId();
+resize.resize(...);
+safeLocalStorage.localStorage.setItem(...);
+signature.signature(...);
 ```

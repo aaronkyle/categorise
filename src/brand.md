@@ -2,15 +2,13 @@
 
 _Brand attributes are based on ADB Branding Toolkit._
 
-```js
-md`### Main Palette
+### Main Palette
 
 ${generateSwatchHTML(mainColors)}
-`
-```
+
 
 ```js
-mainColors = ({
+const mainColors = ({
   "900": "#007DB7", //rgb(0,125,183)
   "800": "#0088C7", //rgb(0,136,199)
   "700": "#0099D8", //rgb(0,153,216)
@@ -23,14 +21,13 @@ mainColors = ({
 })
 ```
 
-```js
-md`### Accent Palette
+### Accent Palette
 
-${generateSwatchHTML(accentColors)}`
-```
+${generateSwatchHTML(accentColors)}
+
 
 ```js
-accentColors = ({
+const accentColors = ({
   "900": "#00A5D2", // rgb(0,165,210)
   "800": "#00B6C9", // rgb(0,182,201)
   "700": "#63CCEC", // rgb(99,204,236)
@@ -44,18 +41,18 @@ accentColors = ({
 ```
 
 ```js
-generateSwatchHTML = (palette) => {
+const generateSwatchHTML = (palette) => {
   const listStyles = "display: inline-block; width: 4rem; height: 4rem; padding: 0.25rem;color:white";
-  const swatches = Object.keys(palette).reduce((acc, key)=> `<li style="background-color: ${palette[key]};${listStyles}">${key}</li>${acc}`,"");
-  return `<ul style="list-style: none;padding-left: 0; display: flex;">${swatches}</ul>`
+  const swatches = Object.keys(palette).reduce((acc, key)=> html`<li style="background-color: ${palette[key]};${listStyles}">${key}</li>${acc}`,"");
+  return html`<ul style="list-style: none;padding-left: 0; display: flex;">${swatches}</ul>`
 }
 ```
 
 ```js
 // To apply base styles when the notebook is downloaded/exported
-substratum({invalidation})
+//substratum({invalidation})
 ```
 
 ```js
-import {substratum} from "@categorise/substratum"
+//import {substratum} from "@categorise/substratum"
 ```

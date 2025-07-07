@@ -5,10 +5,11 @@ Based on an idea by Bryan Gin-ge Chen (which he explores in his notebook [Dirty 
 *Related discussion: [Check if a cell is defined](https://talk.observablehq.com/t/check-if-a-cell-is-defined/4351/3)*
 
 Suggested imports:
+```
 ~~~js
 import {runtime, main, observed} from '@mootari/access-runtime'
 ~~~
-  
+```
 
 
 <style>
@@ -30,24 +31,23 @@ import {runtime, main, observed} from '@mootari/access-runtime'
   }
 </style>
 
-```js
-md`---`
-```
+
 
 ## API
 
 ### Instances
 
-```js
-runtime = recomputeTrigger, captureRuntime
+```js echo
+//const runtime = recomputeTrigger, captureRuntime
+const runtime = captureRuntime
 ```
 
-```js
-main = Array.from(modules).find(d => d[1] === 'main')[0]
+```js echo
+const main = Array.from(modules).find(d => d[1] === 'main')[0]
 ```
 
-```js
-modules = {
+```js echo
+const modules = () => {
   // Builtins are stored in a separate module.
   const builtin = runtime._builtin;
   // Imported modules are keyed by their define() functions, which we don't need here.
@@ -74,7 +74,7 @@ modules = {
 
 ### Utilities
 
-```js
+```js echo
 function observed(variable = null) {
   const _observed = v => v._observer !== no_observer;
   if(variable !== null) return _observed(variable);
@@ -84,8 +84,8 @@ function observed(variable = null) {
 }
 ```
 
-```js
-no_observer = {
+```js echo
+const no_observer = () => {
   const v = main.variable();
   const o = v._observer;
   v.delete();
@@ -95,8 +95,8 @@ no_observer = {
 
 ### Internals
 
-```js
-captureRuntime = new Promise(resolve => {
+```js echo
+const captureRuntime = new Promise(resolve => {
   const forEach = Set.prototype.forEach;
   Set.prototype.forEach = function(...args) {
     const thisArg = args[1];
@@ -106,12 +106,19 @@ captureRuntime = new Promise(resolve => {
       resolve(thisArg);
     }
   };
-  mutable recomputeTrigger = mutable recomputeTrigger + 1;
+  //mutable recomputeTrigger = mutable recomputeTrigger + 1;
+  set_recomputeTrigger(recomputeTrigger + 1)
 })
 ```
 
+```js echo
+//mutable recomputeTrigger = 0
+const recomputeTrigger = Mutable(0)
+const set_recomputeTrigger = (t) => recomputeTrigger.value = t;
+```
+
 ```js
-mutable recomputeTrigger = 0
+recomputeTrigger
 ```
 
 ---
@@ -119,30 +126,33 @@ mutable recomputeTrigger = 0
 
 *Hit Refresh to update the lists below.*
 
-```js
-viewof ex_refresh = Inputs.button('Refresh')
+```js echo
+const ex_refresh = view(Inputs.button('Refresh'))
 ```
 
 ### Defined variables
 
-```js
-ex_vars = ex_refresh, Array.from(runtime._variables).map(v => ({
-  name : v._name,
-  module: modules.get(v._module),
-  type: [, 'normal', 'implicit', 'duplicate'][v._type],
-  observed: v._observer !== no_observer,
-  inputs: v._inputs.length,
-  outputs: v._outputs.size,
-}))
+```js echo
+const ex_vars = (() => {
+  ex_refresh();  // side effects
+  return Array.from(runtime._variables).map(v => ({
+    name: v._name,
+    module: modules.get(v._module),
+    type: [, 'normal', 'implicit', 'duplicate'][v._type],
+    observed: v._observer !== no_observer,
+    inputs: v._inputs.length,
+    outputs: v._outputs.size
+  }));
+})();
 ```
 
-```js
-viewof ex_vars_filters = {
-  const unique = (arr, acc) => Array.from(new Set(arr.map(acc))).sort((a, b) => a?.localCompare?.(b));
+```js echo
+const ex_vars_filters = () => view(() => {
+  const unique = (arr, acc) => Array.from(new Set(arr.map(acc))).sort((a, b) => a?.localeCompare?.(b));
   const modules = unique(ex_vars, v => v.module);
   const types = unique(ex_vars, v => v.type);
   const value = this?.value ?? {};
-  
+
   return Inputs.form({
     modules: Inputs.checkbox(modules, {
       label: 'Modules',
@@ -157,11 +167,12 @@ viewof ex_vars_filters = {
       value: value.features ?? [],
     })
   });
-}
+});
+
 ```
 
-```js
-ex_vars_table = {
+```js echo
+const ex_vars_table = () => {
   const flags = (arr) => Object.fromEntries(arr.map(v => [v, true]));
   const modules = flags(ex_vars_filters.modules);
   const types = flags(ex_vars_filters.types);
@@ -181,8 +192,8 @@ ex_vars_table = {
 
 ### Dependency matrix
 
-```js
-ex_deps = {
+```js echo
+const ex_deps = () => {
   ex_refresh;
   
   const vars = Array.from(observed(), d => ({
