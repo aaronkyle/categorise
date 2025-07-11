@@ -1,27 +1,8 @@
-# TOC
+//import {toc} from '@categorise/toc'
 
-This notebook can generate a table of contents automatically for your notebook.
-
-\`\`\`js
-import {toc} from "@bryangingechen/toc"
-\`\`\`
-
-Here’s an example:
-
-```js echo
-display(toc())
-```
-
-## Implementation
-
-```js echo
-//added/
-import {DOM} from "/components/DOM.js";
 import {Generators} from "npm:@observablehq/stdlib";
-```
 
-```js echo
-function toc(selector = "h2,h3,h4,h5,h6") {
+export function toc(selector = "h2,h3,h4,h5,h6") {
   return Generators.observe(notify => {
     let headings = [];
 
@@ -48,22 +29,3 @@ function toc(selector = "h2,h3,h4,h5,h6") {
     return () => observer.disconnect();
   });
 }
-```
-
-
-
-## Hooray
-
-It worked!
-
-### This is a sub-section
-
-A little text
-
-#### A sub-sub-section?
-
-##### A sub-sub-sub-section?
-
-###### A sub-sub-sub-sub-section! (h6!)
-
-### Another sub-section
