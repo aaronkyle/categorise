@@ -1,5 +1,8 @@
 # localStorageView: Non-invasive local persistence
 
+<!--
+https://observablehq.com/@tomlarkworthy/local-storage-view
+-->
 <!---
 NOTE: There are several places where we need to check for compatibility with Framework, particularly around use of Inputs.bind
 ALSO NOTE: THIS RELIES ON INSPECTOR
@@ -39,23 +42,22 @@ const example1 = view(Inputs.range())
 
 We will use the excellent  [@mbostock/safe-local-storage](/@mbostock/safe-local-storage) which very nicely abstracts over enhanced privacy controls with an in memory fallback.
 
+```js
+//added DOM control
+import {DOM} from "/components/DOM.js"
+```
+
 ```js echo
 //import { localStorage } from '@mbostock/safe-local-storage'
-import { localStorage } from './safe-local-storage.js';
+import { localStorage } from '/components/safe-local-storage.js';
 display(localStorage)
 ```
-
-
-```js echo
-//added DOM control
-import {DOM} from "/components/DOM.js";
-```
-
 
 However, we don't want to have to mess around with our original control to add local persistence. Instead we create a writable [view](https://observablehq.com/@observablehq/introduction-to-views) of a local storage key
 
 ```js echo
-const example1storage = view(localStorageView("example1"))
+const example1storage = view(localStorageView("example1"));
+display(example1storage)
 ```
 
 ```js echo
@@ -92,11 +94,13 @@ const localStorageView = (
   }
 
   return view;
-}
+};
+display(localStorageView)
 ```
 
 ```js echo
-localStorageView.value
+localStorageView.value;
+display(localStorageView.value)
 ```
 
 And we bind our original control to the key view
@@ -118,16 +122,19 @@ Set *json* to true to *serde*.
 ```js echo
 const jsonView = view(localStorageView("json", {
   json: true
-}))
+}));
+display(jsonView)
 ```
 
 ```js echo
-jsonView
+jsonView;
+display(jsonView;)
 ```
 
 ```js echo
 // THIS NEED TO BE VERIFIED AGAINST FRAMEWORK
-jsonView.value
+jsonView.value;
+display(jsonView.value;)
 ```
 
 ### Writing
@@ -167,9 +174,9 @@ You can even declare a UI control, wrap it with local storage and return in a si
 const example3 = view(Inputs.bind(Inputs.textarea(), localStorageView("example3")))
 ```
 
-```js
+```js echo
 //import { inspect } from "@tomlarkworthy/inspector"
-import { inspect } from "./inspector.js"
+import { inspect } from "/components/inspector.js"
 ```
 
 ```js echo

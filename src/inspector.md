@@ -12,22 +12,13 @@ https://observablehq.com/@tomlarkworthy/inspector
 ~~~
 ```
 
-```js echo
-function inspect(value) {
-  const root = document.createElement("DIV");
-  new Inspector(root).fulfilled(value);
-  const element = root.firstChild;
-  element.remove();
-  element.value = value; // for viewof
-  return element;
-};
-display(inspect)
-```
+
 
 ```js echo
-const src = unzip(FileAttachment("/components/inspector-5@1.0.1.js.gz"));
-display(unzip)
+import {require as d3require} from "npm:d3-require";
+display(d3require)
 ```
+
 
 ```js echo
 const unzip = async (attachment) => {
@@ -40,9 +31,26 @@ const unzip = async (attachment) => {
 display(unzip)
 ```
 
-```js
-import {require} from "npm:d3-require";
+```js echo
+const src = unzip(FileAttachment("/components/inspector-5@1.0.1.js.gz"));
+display(unzip)
 ```
+
+
+
+```js echo
+function inspect(value) {
+  const root = document.createElement("DIV");
+  new Inspector(root).fulfilled(value);
+  const element = root.firstChild;
+  element.remove();
+  element.value = value; // for viewof
+  return element;
+};
+display(inspect)
+```
+
+
 
 ```js echo
 const Inspector = (await (async () => {
@@ -50,7 +58,7 @@ const Inspector = (await (async () => {
     new Blob([src], { type: "application/javascript" })
   );
   try {
-    return (await require(objectURL)).Inspector;
+    return (await d3require(objectURL)).Inspector;
   } finally {
     URL.revokeObjectURL(objectURL);
   }
