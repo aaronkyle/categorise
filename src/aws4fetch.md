@@ -1,5 +1,8 @@
 # [aws4fetch](https://github.com/mhart/aws4fetch)
 
+<!--
+https://observablehq.com/@tomlarkworthy/aws4fetch
+-->
 ```
 ~~~js
     import {AwsClient, AwsV4Signer} from '@tomlarkworthy/aws4fetch'
@@ -7,10 +10,15 @@
 ```
 
 ```js echo
-const aws4fetch = async () => {
+display(await FileAttachment("/components/aws4fetch.esm.js.gz").stream()
+    ).pipeThrough(new DecompressionStream("gzip"))
+```
+
+```js echo
+const aws4fetch = await (async () => {
   const response = await new Response(
     (
-      await FileAttachment("aws4fetch.esm.js.gz").stream()
+      await FileAttachment("/components/aws4fetch.esm.js.gz").stream()
     ).pipeThrough(new DecompressionStream("gzip"))
   );
 
@@ -22,9 +30,10 @@ const aws4fetch = async () => {
   try {
     return await import(objectURL);
   } finally {
-    URL.revokeObjectURL(objectURL); // Ensure URL is revoked after import
+    URL.revokeObjectURL(objectURL);
   }
-}
+})();
+display(aws4fetch)
 ```
 
 

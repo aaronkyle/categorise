@@ -1,6 +1,11 @@
 # [@observablehq/inspector@5.0.1](https://github.com/observablehq/inspector)
 ## also see [@observablehq/inspector](https://observablehq.com/@observablehq/inspector)
 
+
+<!--
+https://observablehq.com/@tomlarkworthy/inspector
+-->
+
 ```
 ~~~js
     import {inspect, Inspector} from '@tomlarkworthy/inspector'
@@ -15,11 +20,13 @@ function inspect(value) {
   element.remove();
   element.value = value; // for viewof
   return element;
-}
+};
+display(inspect)
 ```
 
 ```js echo
-const src = unzip(FileAttachment("inspector-5@1.0.1.js.gz"))
+const src = unzip(FileAttachment("/components/inspector-5@1.0.1.js.gz"));
+display(unzip)
 ```
 
 ```js echo
@@ -29,7 +36,8 @@ const unzip = async (attachment) => {
   );
 
   return response.blob();
-}
+};
+display(unzip)
 ```
 
 ```js
@@ -37,16 +45,17 @@ import {require} from "npm:d3-require";
 ```
 
 ```js echo
-const Inspector = (async () => {
+const Inspector = (await (async () => {
   const objectURL = URL.createObjectURL(
     new Blob([src], { type: "application/javascript" })
   );
   try {
     return (await require(objectURL)).Inspector;
   } finally {
-    URL.revokeObjectURL(objectURL); // Ensure URL is revoked after import
+    URL.revokeObjectURL(objectURL);
   }
-})
+})());
+display(Inspector)
 ```
 
 ```js
@@ -56,5 +65,6 @@ const isnode = (value) => {
     (value instanceof Element || value instanceof Text) &&
     value instanceof value.constructor
   );
-}
+};
+display(isnode)
 ```
