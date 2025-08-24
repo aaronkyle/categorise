@@ -263,7 +263,8 @@ const ternary = ({
 
 
 ```js echo
-const z = view(Plot.plot({
+// view here is giving me problems...
+const z = Plot.plot({
   width: 350,
   projection: { type: ternary.projection, inset: 25 },
   marks: [
@@ -272,10 +273,10 @@ const z = view(Plot.plot({
     ternary.slider({ value: [55, 30, 15] }),
     ternary.labels(["E&S Category", "Country Risk", "Sector Risk"])
   ]
-}));
+});
 ```
 
-```js
+```js echo
 display(z);
 ```
 
