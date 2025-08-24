@@ -1,4 +1,4 @@
-## Linked ternary inputs
+# Linked Ternary Inputs
 
 Working on a port of [Fil](https://observablehq.com/@fil)'s [Linked ternary inputs](https://observablehq.com/@fil/linked-ternary-inputs) to Framework.
 
@@ -209,14 +209,12 @@ function slider({
     }
   });
 };
-// Generator of the slider’s values
-//const sliderGen = Generators.input(slider);
 ```
 
 
 ```js
 function combo({
-  labels = ["E&S Category", "Country Risk", "Sector Risk"],
+  labels = ["a", "b", "c"],
   value = [1 / 3, 1 / 3],
   step = 0.01
 } = {}) {
@@ -264,14 +262,8 @@ const ternary = ({
 ```
 
 
-```js
-const x = view(Inputs.bind(ternary.combo(), z))
-```
-
-
-```js
-// Build the plot (optionally pass the same slider in if the API supports it)
-const z = Plot.plot({
+```js echo
+const z = view(Plot.plot({
   width: 350,
   projection: { type: ternary.projection, inset: 25 },
   marks: [
@@ -280,6 +272,18 @@ const z = Plot.plot({
     ternary.slider({ value: [55, 30, 15] }),
     ternary.labels(["E&S Category", "Country Risk", "Sector Risk"])
   ]
-});
+}));
+```
+
+```js
 display(z);
 ```
+
+```js echo
+const x = view(Inputs.bind(ternary.combo(), z))
+```
+
+```js echo
+display(x)
+```
+
