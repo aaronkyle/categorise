@@ -249,7 +249,7 @@ function ternarySync(a, b, c) {
 ```
 
 ```js
-const ternary = ({
+const ternary = {
   projection,
   graticule,
   normalize_channels,
@@ -258,13 +258,13 @@ const ternary = ({
   labels,
   slider,
   combo
-})
+}
 ```
 
 
 ```js echo
 // view here is giving me problems...
-const z = Plot.plot({
+const plot = Plot.plot({
   width: 350,
   projection: { type: ternary.projection, inset: 25 },
   marks: [
@@ -274,14 +274,21 @@ const z = Plot.plot({
     ternary.labels(["E&S Category", "Country Risk", "Sector Risk"])
   ]
 });
+display(plot)
 ```
+
+```js echo
+// VALUE VIEW (read-only display that stays in sync)
+const z = view(Generators.input(plot));  // <- dynamic {a,b,c}
+```
+
 
 ```js echo
 display(z);
 ```
 
 ```js echo
-const x = view(Inputs.bind(ternary.combo(), z))
+const x = view(Inputs.bind(ternary.combo(), plot))
 ```
 
 ```js echo
