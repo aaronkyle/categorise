@@ -1,8 +1,14 @@
 # Reactive Unit Testing and Reporting Framework
 
+```js
+//const url = FileAttachment("noun_test_2404407.svg").url()
+```
+<!--
+// this is failing
 <center>
-<img width="30%" src=${await FileAttachment("noun_test_2404407.svg").url()}></img>
+<img width="30%" src=${url}></img>
 </center>
+-->
 
 A test suite that updates as you fix bugs in realtime. Combines with [healthcheck](https://observablehq.com/@endpointservices/healthcheck) to create a CI.
 
