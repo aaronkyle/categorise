@@ -278,13 +278,12 @@ display(plot)
 ```
 
 ```js echo
-// VALUE VIEW (read-only display that stays in sync)
-const z = view(Generators.input(plot));  // <- dynamic {a,b,c}
+display(z);
 ```
 
-
 ```js echo
-display(z);
+// VALUE VIEW (read-only display that stays in sync)
+const z = Generators.input(plot);  // <- dynamic {a,b,c}
 ```
 
 ```js echo
