@@ -46,7 +46,7 @@ const projection = ({ width, height, angle = 0 }) => {
 ```
 
 ```js 
-const normalize_channels = ({ a, b, c, ...options } = {}) => {
+const normalize = ({ a, b, c, ...options } = {}) => {
   if (a == null) throw new Error("missing channel a");
   if (b == null) throw new Error("missing channel b");
   if (c == null) throw new Error("missing channel c");
@@ -252,7 +252,7 @@ function ternarySync(a, b, c) {
 const ternary = {
   projection,
   graticule,
-  normalize_channels,
+  normalize,
   sphere: Plot.sphere,
   tickLabels,
   labels,
@@ -271,7 +271,7 @@ const plot = Plot.plot({
     Plot.sphere(),
     ternary.graticule(),
     ternary.slider({ value: [55, 30, 15] }),
-    ternary.labels(["E&S Category", "Country Risk", "Sector Risk"])
+    ternary.labels(["a", "b", "c"])
   ]
 });
 display(plot)
