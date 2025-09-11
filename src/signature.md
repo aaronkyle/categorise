@@ -22,16 +22,16 @@ For more examples in the wild please see [Toolbox](https://observablehq.com/d/69
 
 ---
 
-```js
+```js echo
 import { DOM } from '/components/DOM.js'
 ```
 
-```js
-//import * as Promises from "/components/promises.js";
+```js echo
+import * as Promises from "/components/promises.js";
 ```
 
 
-```js
+```js echo
 import markdownit from "npm:markdown-it";
 ```
 
@@ -273,7 +273,7 @@ const RUN_TESTS = view((() => {
 
 ## Internals
 
-```js
+```js echo
 const signature_theme = `
 :scope {
   --line-color: #eee;
@@ -334,7 +334,7 @@ height: 1.3rem;
 `
 ```
 
-```js
+```js echo
 function createStepper() {
   let cb = ()=>{};
   const ret = {
@@ -350,7 +350,7 @@ function createStepper() {
 }
 ```
 
-```js
+```js echo
 function defaultFormatter({signature, description, examples, testList}, {name, open, scope, css}) {
   return html`<${open == null ? 'div' : `details ${open ? 'open' : ''}`} class="${scope}">${[
     !css ? '' : scope == null ? css : scopedStyle('.' + scope, css),
@@ -367,7 +367,7 @@ function defaultFormatter({signature, description, examples, testList}, {name, o
 }
 ```
 
-```js
+```js echo
 function defaultTestRunner(tests, options = {}) {
   const {
     assert = (cond, msg = 'error') => { if(!cond) throw msg },
@@ -400,7 +400,7 @@ function defaultTestRunner(tests, options = {}) {
 }
 ```
 
-```js
+```js echo
 function defaultSignatureParser(fn, name = null) {
   const src = fn.toString();
   let end = 0, r = 0;
@@ -438,7 +438,7 @@ function defaultSignatureParser(fn, name = null) {
 }
 ```
 
-```js
+```js echo
 function scopedStyle(scope, css) {
   const style = html`<style>`;
   style.textContent = css.replace(/\:scope\b/g, scope); 
@@ -446,7 +446,7 @@ function scopedStyle(scope, css) {
 }
 ```
 
-```js
+```js echo
 // A pattern that matches notebook URLs, slugs and IDs in various formats.
   // Named search groups:
   // - "id" (hexadecimal notebook ID),
@@ -464,7 +464,7 @@ const regIdentifier = new RegExp('^'
                      + '([?#]|$)')
 ```
 
-```js
+```js echo
 const parseFrontmatter = v1Source => {
   const match = v1Source.match(/^(?:[^\n]+\n){4}/);
   if(!match) return null;
@@ -476,7 +476,7 @@ const parseFrontmatter = v1Source => {
 )}
 ```
 
-```js
+```js echo
 const PINNED_LIB = getPinnedSlug('@mootari/signature')
 ```
 
@@ -484,7 +484,7 @@ const PINNED_LIB = getPinnedSlug('@mootari/signature')
 ## Old docs - under construction
 
 
-```js
+```js echo
 function demoFunction(sw, sh, tw = null, th = null) {
   if(tw == null && th == null) return [sw, sh, 1];
   const ar = sw / sh;
@@ -501,7 +501,6 @@ function demoFunction(sw, sh, tw = null, th = null) {
 ***Note:*** *This section is currently being reworked.*
 
 To extend the base theme, first import it:
-
 
 To override the CSS for a single instance, pass the default CSS along with your custom CSS:
 
