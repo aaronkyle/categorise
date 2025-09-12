@@ -22,16 +22,16 @@ For more examples in the wild please see [Toolbox](https://observablehq.com/d/69
 
 ---
 
-```js echo
+```js
 import { DOM } from '/components/DOM.js'
 ```
 
-```js echo
+```js
 import * as Promises from "/components/promises.js";
 ```
 
 
-```js echo
+```js
 import markdownit from "npm:markdown-it";
 ```
 
@@ -240,12 +240,11 @@ return code(myCss, {
 ```
 
 ```js echo
-function code(text, {type = 'javascript', trim = true, className = 'code'} = {}) {
-  const out = md`\`\`\`${type}\n${!trim ? text : text.replace(/^\s*\n|\s+?$/g, '')}\n\`\`\``;
-  if(className) out.classList.add('code');
-  return out;  
+function code(text, {type = 'javascript', trim = true} = {}) {
+  return md`\`\`\`${type}
+${!trim ? text : text.replace(/^\s*\n|\s+?$/g, '')}
+\`\`\``;
 }
-
 ```
 
 ```js echo
@@ -273,7 +272,7 @@ const RUN_TESTS = view((() => {
 
 ## Internals
 
-```js echo
+```js
 const signature_theme = `
 :scope {
   --line-color: #eee;
@@ -334,7 +333,7 @@ height: 1.3rem;
 `
 ```
 
-```js echo
+```js
 function createStepper() {
   let cb = ()=>{};
   const ret = {
@@ -350,24 +349,50 @@ function createStepper() {
 }
 ```
 
-```js echo
+```js
+
+//function defaultFormatter({signature, description, examples, testList}, {name, open, scope, css}) {
+//  return html`<${open == null ? 'div' : `details ${open ? 'open' : ''}`} class="${scope}">${[
+//    !css ? '' : scope == null ? css : scopedStyle('.' + scope, css),
+//    html`<${open == null ? 'div' : 'summary'} class=signature>${signature}${
+//!name || !name.length ? '' : html`<a class=link href="#${name}">`
+//}`,
+//    description == null ? '' : html`<div class=description>${description}`,
+//    !examples.length ? '' : html`<div class=examples>${[
+//      examples.length < 2 ? md`Example:` : md`Examples:`,
+//      ...examples
+//    ]}`,
+//    testList || '',
+//  ]}`;
+//}
+
+
 function defaultFormatter({signature, description, examples, testList}, {name, open, scope, css}) {
-  return html`<${open == null ? 'div' : `details ${open ? 'open' : ''}`} class="${scope}">${[
+  const header =
+    open == null
+      ? html`<div class=signature>${signature}${!name || !name.length ? '' : html`<a class=link href="#${name}">`}`
+      : html`<summary class=signature>${signature}${!name || !name.length ? '' : html`<a class=link href="#${name}">`}`;
+
+  const body = [
     !css ? '' : scope == null ? css : scopedStyle('.' + scope, css),
-    html`<${open == null ? 'div' : 'summary'} class=signature>${signature}${
-!name || !name.length ? '' : html`<a class=link href="#${name}">`
-}`,
+    header,
     description == null ? '' : html`<div class=description>${description}`,
     !examples.length ? '' : html`<div class=examples>${[
       examples.length < 2 ? md`Example:` : md`Examples:`,
       ...examples
     ]}`,
     testList || '',
-  ]}`;
+  ];
+
+  return open == null
+    ? html`<div class="${scope}">${body}`
+    : html`<details class="${scope}" ?open=${open}>${body}`;
 }
+
+
 ```
 
-```js echo
+```js
 function defaultTestRunner(tests, options = {}) {
   const {
     assert = (cond, msg = 'error') => { if(!cond) throw msg },
@@ -400,7 +425,7 @@ function defaultTestRunner(tests, options = {}) {
 }
 ```
 
-```js echo
+```js
 function defaultSignatureParser(fn, name = null) {
   const src = fn.toString();
   let end = 0, r = 0;
@@ -438,7 +463,7 @@ function defaultSignatureParser(fn, name = null) {
 }
 ```
 
-```js echo
+```js
 function scopedStyle(scope, css) {
   const style = html`<style>`;
   style.textContent = css.replace(/\:scope\b/g, scope); 
@@ -446,7 +471,7 @@ function scopedStyle(scope, css) {
 }
 ```
 
-```js echo
+```js
 // A pattern that matches notebook URLs, slugs and IDs in various formats.
   // Named search groups:
   // - "id" (hexadecimal notebook ID),
@@ -464,7 +489,7 @@ const regIdentifier = new RegExp('^'
                      + '([?#]|$)')
 ```
 
-```js echo
+```js
 const parseFrontmatter = v1Source => {
   const match = v1Source.match(/^(?:[^\n]+\n){4}/);
   if(!match) return null;
@@ -476,7 +501,7 @@ const parseFrontmatter = v1Source => {
 )}
 ```
 
-```js echo
+```js
 const PINNED_LIB = getPinnedSlug('@mootari/signature')
 ```
 
@@ -484,7 +509,7 @@ const PINNED_LIB = getPinnedSlug('@mootari/signature')
 ## Old docs - under construction
 
 
-```js echo
+```js
 function demoFunction(sw, sh, tw = null, th = null) {
   if(tw == null && th == null) return [sw, sh, 1];
   const ar = sw / sh;
@@ -501,6 +526,7 @@ function demoFunction(sw, sh, tw = null, th = null) {
 ***Note:*** *This section is currently being reworked.*
 
 To extend the base theme, first import it:
+
 
 To override the CSS for a single instance, pass the default CSS along with your custom CSS:
 
