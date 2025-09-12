@@ -21,6 +21,19 @@ export function svg(width, height) {
   return svg;
 };
 
+export function text(value) {
+  return document.createTextNode(value);
+}
+
+export function select(values) {
+  var select = document.createElement("select");
+  Array.prototype.forEach.call(values, function(value) {
+    var option = document.createElement("option");
+    option.value = option.textContent = value;
+    select.appendChild(option);
+  });
+  return select;
+}
 
 export function context2d(width, height, dpi) {
   if (dpi == null) dpi = devicePixelRatio;
@@ -52,6 +65,8 @@ export function contextWebGL(width, height, dpi) {
 export const DOM = {
   uid,
   svg,
+  text,
+  select,
   context2d,
   contextWebGL
 };
