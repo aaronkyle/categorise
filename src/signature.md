@@ -1,4 +1,14 @@
 # Signature - A Documentation Toolkit
+
+<div class="tip">
+This notebook ports a notebook by Fabian Iwand [@mootari] called [Signature - A Documentation Toolkit](https://observablehq.com/@mootari/signature).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
 <!-- keywords: javadoc docgen docblock -->
 
 This notebook offers a set of documentation helpers.

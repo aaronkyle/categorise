@@ -1,5 +1,15 @@
 # localStorageView: Non-invasive local persistence
 
+<div class="tip">
+This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [localStorageView: Non-invasive local persistence](https://observablehq.com/@tomlarkworthy/local-storage-view).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
+
 <!--
 https://observablehq.com/@tomlarkworthy/local-storage-view
 -->

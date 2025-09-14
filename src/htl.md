@@ -1,5 +1,15 @@
 # Hypertext Literal
 
+
+<div class="tip">
+This notebook ports a notebook by Mike Bostock [@mbostock] called [DOM view](https://observablehq.com/@observablehq/htl).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
 ```js
 //import {html} from "npm:@observablehq/stdlib@5/src/html";
 ```

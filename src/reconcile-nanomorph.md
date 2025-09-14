@@ -1,5 +1,15 @@
 # Hypertext literal reconciliation with nanomorph
 
+<div class="tip">
+This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [Hypertext literal reconciliation with nanomorph](https://observablehq.com/@tomlarkworthy/reconcile-nanomorph).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
+
 <!--
 https://observablehq.com/@tomlarkworthy/reconcile-nanomorph
 -->

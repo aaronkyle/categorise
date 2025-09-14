@@ -1,4 +1,15 @@
 # Copier
+
+
+<div class="tip">
+This notebook ports a notebook by Mike Bostock [@mbostock] called [Copier](https://observablehq.com/@mbostock/copiere).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
 <!-- https://observablehq.com/@mbostock/copier -->
 
 

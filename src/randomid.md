@@ -1,5 +1,15 @@
 # Secure random ID
 
+<div class="tip">
+This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [Secure random ID](https://observablehq.com/@tomlarkworthy/randomid).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
+
 ```
 ~~~js
 import {randomId} from '@tomlarkworthy/randomid'

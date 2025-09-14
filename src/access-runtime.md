@@ -1,5 +1,13 @@
 # Accessing a Notebook's Runtime
 
+<div class="tip">
+This notebook ports a notebook by Fabian Iwand [@mootari] called [Accessing a Notebook's Runtime](https://observablehq.com/@mootari/access-runtime).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
 Based on an idea by Bryan Gin-ge Chen (which he explores in his notebook [Dirty tricks](https://observablehq.com/d/4e5230c1d38f7c0f)), this notebook demonstrates a hack that exposes a notebook's underlying [Runtime](https://github.com/observablehq/runtime) instance.
 
 *Related discussion: [Check if a cell is defined](https://talk.observablehq.com/t/check-if-a-cell-is-defined/4351/3)*

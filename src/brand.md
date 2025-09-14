@@ -1,6 +1,5 @@
 # Brand Colors
 
-_Brand attributes are based on ADB Branding Toolkit._
 
 ### Main Palette
 

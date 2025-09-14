@@ -2,6 +2,18 @@
 ## also see [@observablehq/inspector](https://observablehq.com/@observablehq/inspector)
 
 
+
+<div class="tip">
+This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [@observablehq/inspector@5.0.1](https://observablehq.com/@observablehq/htl).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
+
+
 <!--
 https://observablehq.com/@tomlarkworthy/inspector
 -->
