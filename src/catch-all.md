@@ -80,7 +80,7 @@ display(errorCell)
 ### Implementation
 
 ```js echo
-const errorLog = Mutable([]);
+let errorLog = Mutable([]);
 
 const catchAll = (handler, invalidation) => {
   const listener = () => handler("unknown", error.value);
@@ -91,8 +91,8 @@ const catchAll = (handler, invalidation) => {
     });
 }
 
-///ensure this block runs when 'error' is invoked.
-//error;
+//ensure this block runs when 'error' is invoked.
+//errorTrigger;
 
 // update the mutable using .value
 catchAll((cellName, reason) => {
@@ -138,7 +138,7 @@ display(catchAll((cellName, reason) => {
 
 
 ```js echo
-const errorElement = (() => {
+const error = (() => {
   const view = Inputs.input();
 
   const notify = (event) => {
@@ -170,11 +170,11 @@ const errorElement = (() => {
   return view;
 })();
 
-let error = Generators.input(errorElement)
+//let error = Generators.input(errorElement)
 ```
 
 ```js echo
-display(errorElement);
+//display(errorElement);
 ```
 
 ```js echo
@@ -222,11 +222,11 @@ Investigate MUTABLE and use of .value
 ```js echo
 suite.test("Errors are logged", async (done) => {
 //  const numErrors = mutable errorLog.length;
-  const numErrors = errorLog.value.length;
+  const numErrors = errorLog.length;
   errorTrigger.dispatchEvent(new Event("input")); // trigger an error
   setTimeout(() => {
 //    const newNumErrors = mutable errorLog.length;
-    const newNumErrors = errorLog.value.length;
+    const newNumErrors = errorLog.length;
     testing.expect(newNumErrors - numErrors).toBeGreaterThan(0);
     done();
   }, 500);
