@@ -1,5 +1,15 @@
 # Detect notebook runtime errors with *catchAll((cellName, reason) => {...})*
 
+
+<div class="tip">
+This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [Detect notebook runtime errors with catchAll((cellName, reason) => {...})](https://observablehq.com/@tomlarkworthy/catch-all).  All mistakes and deviations from the original are my own.
+</div>
+
++--------------------------------------------------------------+
+|  — The following text/narrative is from the original —       |
++--------------------------------------------------------------+
+
+
 <span style="font-size: 300px; padding-left: 100px">🚨</span>
 
 <!--
