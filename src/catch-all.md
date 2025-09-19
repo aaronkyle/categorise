@@ -92,7 +92,7 @@ const catchAll = (handler, invalidation) => {
 }
 
 ///ensure this block runs when 'error' is invoked.
-error;
+//error;
 
 // update the mutable using .value
 catchAll((cellName, reason) => {
