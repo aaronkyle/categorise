@@ -41,8 +41,11 @@ const errorTriggerInput = Inputs.button(html`throw an error`, { required: true }
 const errorTrigger = Generators.input(errorTriggerInput);
 ```
 
-```js
+```js echo
 display(errorTriggerInput);
+```
+
+```js echo
 display(errorTrigger)
 ```
 
@@ -76,7 +79,7 @@ error;
 
 // update the mutable using .value
 catchAll((cellName, reason) => {
-  let errorLog = errorLog.concat({
+  let errorLog = errorLog.value.concat({
     cellName,
     reason
   });
@@ -90,7 +93,11 @@ display(catchAll);
 ```
 
 ```js echo
-display(errorLog)
+display(errorLog);
+```
+
+```js echo
+display(errorLog.value)
 ```
 
 ```js echo
@@ -103,7 +110,7 @@ view(Inputs.table(errorLog))
 ```js echo
 // re-including outside of mutable definition for testing
 display(catchAll((cellName, reason) => {
-  let errorLog = errorLog.concat({
+  let errorLog = errorLog.value.concat({
     cellName,
     reason
   });
@@ -166,25 +173,6 @@ We load the testing framework asynchronously to avoid statically depending on te
 Continuous integration is important for a library like this where API changes in Observable can easily break the implementation.
 
 ```js echo
-/// FIX THIS
-
-///const testing = {
-///  viewof errorTrigger, catchAll;
-///  const [{ Runtime }, { default: define }] = await Promise.all([
-///    import(
-///      "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js"
-///    ),
-///    import(`https://api.observablehq.com/@tomlarkworthy/testing.js?v=3`)
-///  ]);
-///  const module = new Runtime().module(define);
-///  return Object.fromEntries(
-///    await Promise.all(
-///      ["expect", "createSuite"].map((n) => module.value(n).then((v) => [n, v]))
-///    )
-///  );
-///}
-
-
 const testing = await (async () => {
   // import modules
   const [{ Runtime }, { default: define }] = await Promise.all([
@@ -211,17 +199,17 @@ const suite = view(testing.createSuite())
 ```
 
 <!---
-Investigate MUTABLE
+Investigate MUTABLE and use of .value
 --->
 
 ```js echo
 suite.test("Errors are logged", async (done) => {
 //  const numErrors = mutable errorLog.length;
-  const numErrors = errorLog.length;
+  const numErrors = errorLog.value.length;
   errorTrigger.dispatchEvent(new Event("input")); // trigger an error
   setTimeout(() => {
 //    const newNumErrors = mutable errorLog.length;
-    const newNumErrors = errorLog.length;
+    const newNumErrors = errorLog.value.length;
     testing.expect(newNumErrors - numErrors).toBeGreaterThan(0);
     done();
   }, 500);
