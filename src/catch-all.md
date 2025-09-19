@@ -5,10 +5,11 @@
 This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [Detect notebook runtime errors with catchAll((cellName, reason) => {...})](https://observablehq.com/@tomlarkworthy/catch-all).  All mistakes and deviations from the original are my own.
 </div>
 
+```
 +--------------------------------------------------------------+
 |  — The following text/narrative is from the original —       |
 +--------------------------------------------------------------+
-
+```
 
 <span style="font-size: 300px; padding-left: 100px">🚨</span>
 
@@ -46,18 +47,24 @@ You can pass an *invalidation* promise as the 2nd argument to clean up the obser
 
 ```js echo
 //viewof errorTrigger = Inputs.button(md`throw an error`, { required: true })
-const errorTriggerInput = Inputs.button(html`throw an error`, { required: true })
+const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }))
 
-const errorTrigger = Generators.input(errorTriggerInput);
+//const errorTrigger = Generators.input(errorTriggerInput);
 ```
 
 ```js echo
-display(errorTriggerInput);
+//display(errorTriggerInput);
 ```
 
 ```js echo
 display(errorTrigger)
 ```
+
+```js echo
+display(errorTrigger.value)
+```
+
+
 
 ```js echo
 const errorCell = (() => {
