@@ -47,16 +47,11 @@ You can pass an *invalidation* promise as the 2nd argument to clean up the obser
 
 ```js echo
 //viewof errorTrigger = Inputs.button(md`throw an error`, { required: true })
-const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }))
-//const errorTrigger = Generators.input(errorTriggerInput);
-```
+const errorTriggerElement = Inputs.button(html`throw an error`, { required: true });
+//const errorTrigger= view(errorTriggerElement)
+//const errorTrigger = Generators.input(errorTriggerElement);
 
-```js echo
-//display(errorTriggerInput);
-```
-
-```js echo
-display(errorTrigger)
+const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }));
 ```
 
 
@@ -79,16 +74,6 @@ display(errorLog);
 view(Inputs.table(errorLog))
 ```
 
-
-```js echo
-// re-including outside of mutable definition for testing
-display(catchAll((cellName, reason) => {
-  let errorLog = errorLog.concat({
-    cellName,
-    reason
-  });
-}, invalidation));
-```
 
 
 ### Implementation
