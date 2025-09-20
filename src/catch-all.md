@@ -24,9 +24,9 @@ https://observablehq.com/@tomlarkworthy/catch-all
 Usage:
 
 ```
-~~~js
-import {catchAll} from '@tomlarkworthy/catch-all'
-~~~
+   ~~~js
+   import {catchAll} from '@tomlarkworthy/catch-all'
+   ~~~
 ```
 
 ### Change Log
@@ -48,7 +48,6 @@ You can pass an *invalidation* promise as the 2nd argument to clean up the obser
 ```js echo
 //viewof errorTrigger = Inputs.button(md`throw an error`, { required: true })
 const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }))
-
 //const errorTrigger = Generators.input(errorTriggerInput);
 ```
 
@@ -58,10 +57,6 @@ const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }
 
 ```js echo
 display(errorTrigger)
-```
-
-```js echo
-display(errorTrigger.value)
 ```
 
 
@@ -75,6 +70,25 @@ const errorCell = (() => {
 display(errorCell)
 ```
 
+
+```js echo
+display(errorLog);
+```
+
+```js echo
+view(Inputs.table(errorLog))
+```
+
+
+```js echo
+// re-including outside of mutable definition for testing
+display(catchAll((cellName, reason) => {
+  let errorLog = errorLog.concat({
+    cellName,
+    reason
+  });
+}, invalidation));
+```
 
 
 ### Implementation
@@ -91,12 +105,9 @@ const catchAll = (handler, invalidation) => {
     });
 }
 
-//ensure this block runs when 'error' is invoked.
-//errorTrigger;
-
 // update the mutable using .value
 catchAll((cellName, reason) => {
-  let errorLog = errorLog.value.concat({
+  let errorLog = errorLog.concat({
     cellName,
     reason
   });
@@ -105,34 +116,7 @@ catchAll((cellName, reason) => {
 
 
 
-```js echo
-display(catchAll);
-```
 
-```js echo
-display(errorLog);
-```
-
-```js echo
-display(errorLog.value)
-```
-
-```js echo
-view(Inputs.table(errorLog))
-```
-
-
-
-
-```js echo
-// re-including outside of mutable definition for testing
-display(catchAll((cellName, reason) => {
-  let errorLog = errorLog.value.concat({
-    cellName,
-    reason
-  });
-}, invalidation));
-```
 
 
 
@@ -170,16 +154,12 @@ const error = (() => {
   return view;
 })();
 
+display(error);
+
+// removing this - prevented everything from rendering
 //let error = Generators.input(errorElement)
 ```
 
-```js echo
-//display(errorElement);
-```
-
-```js echo
-display(error);
-```
 
 
 
@@ -190,24 +170,29 @@ We load the testing framework asynchronously to avoid statically depending on te
 Continuous integration is important for a library like this where API changes in Observable can easily break the implementation.
 
 ```js echo
-const testing = await (async () => {
-  // import modules
+const testing = (async () => {
+  
+  errorTrigger, catchAll;
+
   const [{ Runtime }, { default: define }] = await Promise.all([
     import("https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js"),
     import("https://api.observablehq.com/@tomlarkworthy/testing.js?v=3")
   ]);
 
-  // create Observable runtime module
   const module = new Runtime().module(define);
-
-  // get exported values
   const entries = await Promise.all(
     ["expect", "createSuite"].map((n) => module.value(n).then((v) => [n, v]))
   );
 
-  // return as an object
-  return Object.fromEntries(entries);
+   return Object.fromEntries(
+    await Promise.all(
+      ["expect", "createSuite"].map((n) => module.value(n).then((v) => [n, v]))
+    )
+  );
 })();
+```
+
+```js echo
 display(testing)
 ```
 
