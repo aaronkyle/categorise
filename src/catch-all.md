@@ -107,7 +107,7 @@ const catchAll = (handler, invalidation) => {
 
 // update the mutable using .value
 catchAll((cellName, reason) => {
-  let errorLog = errorLog.concat({
+  errorLog.value = errorLog.value.concat({
     cellName,
     reason
   });
