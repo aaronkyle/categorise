@@ -46,18 +46,49 @@ You can pass an *invalidation* promise as the 2nd argument to clean up the obser
 -->
 
 ```js echo
+// ORIGINAL
 //viewof errorTrigger = Inputs.button(md`throw an error`, { required: true })
-//const errorTriggerElement = Inputs.button(html`throw an error`, { required: true });
-//const errorTrigger= view(errorTriggerElement)
+
+// PATTERN WERE I EXPOSE THE DOM SEPARATELY
+// This approach doesn't work because the error button won't generate a new error
+// Seems to be because the generator or view is always running
+const errorTriggerElement = Inputs.button(html`throw an error`, { required: true });
+const errorTrigger = display(errorTriggerElement)
+// ALTERNATIVE RENDERINGS
+
+// view doesn't work here; it results in the error 'TypeError: errorTrigger.dispatchEvent is not a function'
+//const errorTrigger = view(errorTriggerElement)
+
 //const errorTrigger = Generators.input(errorTriggerElement);
 
-const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }));
+// PATTERN WERE I EXPOSE THE DOM SEPARATELY
+// This pattern allows the button to generate a new errorCell, but it doesn't expose the DOM so I can't add and event listener or a dispatch event.
+//const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }));
+```
+
+```js echo
+// This displays as true where we use the pattern of separating an input element with DOM from the generator.
+display(errorTrigger.dispatchEvent(new Event("input")))
+```
+
+```js echo
+//EXPERIMENTAL (not working)
+// This doesn't take us any further in getting around the generator always running
+//const errorTriggerBound = Inputs.bind(Inputs.button(html`throw an error`, { required: true }), errorTriggerElement)
+```
+
+```js echo
+//EXPERIMENTAL (not working)
+// This doesn't take us any further in getting around the generator always running
+//const errorTriggerBoundDisplay = view(await errorTriggerBound)
 ```
 
 
-
 ```js echo
+// With the separation of the DOM element and the generator, working in this cell is tricky.  The Element is not reactive.  The generator always runs.
+// Look into setting up a separate input using bind and listening for that.
 const errorCell = (() => {
+  // Neither when linking this to errorTrigger not errorTrigger element does this work.
   errorTrigger;
   // Errors thrown here are picked up by catchAll
   throw new Error("An error " + Math.random().toString(16).substring(3));
@@ -188,6 +219,10 @@ const suite = view(testing.createSuite())
 <!---
 Investigate MUTABLE and use of .value
 --->
+
+```js
+display(errorLog.length)
+```
 
 ```js echo
 suite.test("Errors are logged", async (done) => {
