@@ -47,7 +47,7 @@ You can pass an *invalidation* promise as the 2nd argument to clean up the obser
 
 ```js echo
 //viewof errorTrigger = Inputs.button(md`throw an error`, { required: true })
-const errorTriggerElement = Inputs.button(html`throw an error`, { required: true });
+//const errorTriggerElement = Inputs.button(html`throw an error`, { required: true });
 //const errorTrigger= view(errorTriggerElement)
 //const errorTrigger = Generators.input(errorTriggerElement);
 
@@ -86,7 +86,7 @@ const catchAll = (handler, invalidation) => {
   error.addEventListener("input", listener);
   if (invalidation)
     invalidation.then(() => {
-      error.removeEventListener(listener);
+      error.removeEventListener("input", listener);
     });
 }
 
