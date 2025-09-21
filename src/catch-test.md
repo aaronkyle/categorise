@@ -64,5 +64,88 @@ const errorCell = (() => {
 display(errorCell)
 ```
 
+```js echo
+const catchAll = (handler, invalidation) => {
+  const listener = () => handler("unknown", error.value);
+
+  // Listen on the element
+//  error.addEventListener("input", listener);
+// this doesn't work because no cells resolve.
+  error.addEventListener("input", listener);
+  if (invalidation)
+    invalidation.then(() => {
+//      error.removeEventListener("input", listener);
+  error.removeEventListener("input", listener);
+    });
+};
+display(catchAll)
+```
 
 
+```js echo
+const errorLog = Mutable([]);
+
+catchAll((cellName, reason) => {
+  errorLog.value = errorLog.value.concat({
+    cellName,
+    reason
+  });
+}, invalidation)
+```
+
+
+
+```js echo
+display(errorLog);
+```
+
+```js echo
+// Experimenting here in changing to an element that later gets rendered as a view of generated.  So far this approach doesn't seem to work because a subsequent call to display(error) doesn't resolve (spinning wheel).
+
+const error = (() => {
+// When I try to use errorElement in 'catchAll`, the cells get locked up and stop rendering.
+
+//const error = (() => {
+  const view = Inputs.input();
+
+  const notify = (event) => {
+    view.value = event.detail.error;
+    view.dispatchEvent(new Event("input", { bubbles: true }));
+  };
+
+  const processInspectorNode = (el) => {
+    el.addEventListener("error", notify);
+  };
+
+  // Attach to current cells
+  [...document.querySelectorAll(".observablehq").values()].forEach(
+    processInspectorNode
+  );
+  // Watch for new cells
+  const root = document.querySelector(".observablehq-root");
+  if (root) {
+    const observer = new MutationObserver((mutationList, observer) => {
+      for (const mutation of mutationList) {
+        [...mutation.addedNodes].forEach(processInspectorNode);
+      }
+    });
+    observer.observe(root, {
+      childList: true
+    });
+    invalidation.then(observer.disconnect);
+  }
+  return view;
+})();
+//display(errorElement)
+//display(error);
+
+// removing this - prevented everything from rendering
+//const errorGenerator = Generators.input(errorElement)
+//const error = Generators.input(errorElement)
+
+// this one didn't render downstream elements (spinning arrow)
+//const error = view(errorElement)
+
+// testing this just for fun
+//const error = Inputs.bind(errorGenerator, errorElement)
+```

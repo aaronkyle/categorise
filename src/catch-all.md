@@ -99,7 +99,11 @@ view(Inputs.table(errorLog))
 ```js echo
 const catchAll = (handler, invalidation) => {
   const listener = () => handler("unknown", error.value);
+
+  // Listen on the element
   error.addEventListener("input", listener);
+// this doesn't work because no cells resolve.
+//  errorElement.addEventListener("input", listener);
   if (invalidation)
     invalidation.then(() => {
       error.removeEventListener("input", listener);
@@ -139,6 +143,8 @@ display(errorLog.value);
 // Experimenting here in changing to an element that later gets rendered as a view of generated.  So far this approach doesn't seem to work because a subsequent call to display(error) doesn't resolve (spinning wheel).
 
 //const errorElement = (() => {
+// When I try to use errorElement in 'catchAll`, the cells get locked up and stop rendering.
+
 const error = (() => {
   const view = Inputs.input();
 
@@ -174,15 +180,53 @@ const error = (() => {
 //display(error);
 
 // removing this - prevented everything from rendering
+//const errorGenerator = Generators.input(errorElement)
 //const error = Generators.input(errorElement)
 
-// this one didn't render the element (spinning arrow)
+// this one didn't render downstream elements (spinning arrow)
 //const error = view(errorElement)
+
+// testing this just for fun
+//const error = Inputs.bind(errorGenerator, errorElement)
 ```
 
 ```js echo
-display(error)
+display(error);
 ```
+
+```js echo
+display(error.value)
+```
+
+
+```js echo
+view(error);
+```
+
+
+```js echo
+display(view(error));
+```
+
+
+```js echo
+//display(errorElement)
+```
+
+```js echo
+//display(errorElement.value)
+```
+
+
+```js echo
+//view(errorElement);
+```
+
+
+```js echo
+//display(view(errorElement));
+```
+
 
 
 
