@@ -50,45 +50,31 @@ You can pass an *invalidation* promise as the 2nd argument to clean up the obser
 //viewof errorTrigger = Inputs.button(md`throw an error`, { required: true })
 
 // PATTERN WERE I EXPOSE THE DOM SEPARATELY
-// This approach doesn't work because the error button won't generate a new error
-// Seems to be because the generator or view is always running
 const errorTriggerElement = Inputs.button(html`throw an error`, { required: true });
-const errorTrigger = display(errorTriggerElement)
-// ALTERNATIVE RENDERINGS
 
+// The generator serves no purpose here.
+const errorTriggerGenerator = Generators.input(errorTriggerElement);
+
+const errorTrigger = view(Inputs.bind(Inputs.button(html`throw an error`, { required: true }), errorTriggerElement));
+```
+
+```js
 // view doesn't work here; it results in the error 'TypeError: errorTrigger.dispatchEvent is not a function'
 //const errorTrigger = view(errorTriggerElement)
+```
 
-//const errorTrigger = Generators.input(errorTriggerElement);
-
-// PATTERN WERE I EXPOSE THE DOM SEPARATELY
-// This pattern allows the button to generate a new errorCell, but it doesn't expose the DOM so I can't add and event listener or a dispatch event.
-//const errorTrigger = view(Inputs.button(html`throw an error`, { required: true }));
+```js echo
+display(errorTrigger);
 ```
 
 ```js echo
 // This displays as true where we use the pattern of separating an input element with DOM from the generator.
-display(errorTrigger.dispatchEvent(new Event("input")))
-```
-
-```js echo
-//EXPERIMENTAL (not working)
-// This doesn't take us any further in getting around the generator always running
-//const errorTriggerBound = Inputs.bind(Inputs.button(html`throw an error`, { required: true }), errorTriggerElement)
-```
-
-```js echo
-//EXPERIMENTAL (not working)
-// This doesn't take us any further in getting around the generator always running
-//const errorTriggerBoundDisplay = view(await errorTriggerBound)
+display(errorTriggerElement.dispatchEvent(new Event("input")))
 ```
 
 
 ```js echo
-// With the separation of the DOM element and the generator, working in this cell is tricky.  The Element is not reactive.  The generator always runs.
-// Look into setting up a separate input using bind and listening for that.
 const errorCell = (() => {
-  // Neither when linking this to errorTrigger not errorTrigger element does this work.
   errorTrigger;
   // Errors thrown here are picked up by catchAll
   throw new Error("An error " + Math.random().toString(16).substring(3));
@@ -98,6 +84,7 @@ display(errorCell)
 
 
 ```js echo
+// We're still not accumulating errors in the log.  Investigate how we're setting the mutable.
 display(errorLog);
 ```
 
@@ -110,8 +97,6 @@ view(Inputs.table(errorLog))
 ### Implementation
 
 ```js echo
-let errorLog = Mutable([]);
-
 const catchAll = (handler, invalidation) => {
   const listener = () => handler("unknown", error.value);
   error.addEventListener("input", listener);
@@ -119,7 +104,12 @@ const catchAll = (handler, invalidation) => {
     invalidation.then(() => {
       error.removeEventListener("input", listener);
     });
-}
+};
+display(catchAll);
+```
+
+```js echo
+let errorLog = Mutable([]);
 
 // update the mutable using .value
 catchAll((cellName, reason) => {
@@ -132,12 +122,23 @@ catchAll((cellName, reason) => {
 
 
 
+```js echo
+display(errorLog);
+```
+
+```js echo
+display(errorLog.value);
+```
+
 
 
 
 
 
 ```js echo
+// Experimenting here in changing to an element that later gets rendered as a view of generated.  So far this approach doesn't seem to work because a subsequent call to display(error) doesn't resolve (spinning wheel).
+
+//const errorElement = (() => {
 const error = (() => {
   const view = Inputs.input();
 
@@ -170,12 +171,18 @@ const error = (() => {
   return view;
 })();
 
-display(error);
+//display(error);
 
 // removing this - prevented everything from rendering
-//let error = Generators.input(errorElement)
+//const error = Generators.input(errorElement)
+
+// this one didn't render the element (spinning arrow)
+//const error = view(errorElement)
 ```
 
+```js echo
+display(error)
+```
 
 
 
@@ -228,7 +235,7 @@ display(errorLog.length)
 suite.test("Errors are logged", async (done) => {
 //  const numErrors = mutable errorLog.length;
   const numErrors = errorLog.length;
-  errorTrigger.dispatchEvent(new Event("input")); // trigger an error
+  errorTriggerElement.dispatchEvent(new Event("input")); // trigger an error
   setTimeout(() => {
 //    const newNumErrors = mutable errorLog.length;
     const newNumErrors = errorLog.length;
