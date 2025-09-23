@@ -2,7 +2,9 @@
 
 
 <div class="tip">
-This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [Detect notebook runtime errors with catchAll((cellName, reason) => {...})](https://observablehq.com/@tomlarkworthy/catch-all).  All mistakes and deviations from the original are my own.
+  This notebook ports to Observable Framework a notebook by Tom Larkworthy
+  <a href="https://observablehq.com/@tomlarkworthy" target="_blank" rel="noopener noreferrer">@tomlarkworthy</a> called <a href="https://observablehq.com/@tomlarkworthy/catch-all" target="_blank" rel="noopener noreferrer">Detect notebook runtime errors with <code>catchAll((cellName, reason) =&gt; {...})</code> </a>. <br/>
+  All mistakes and deviations from the original are my own.
 </div>
 
 ```
@@ -46,45 +48,53 @@ You can pass an *invalidation* promise as the 2nd argument to clean up the obser
 -->
 
 ```js echo
-// ORIGINAL
 //viewof errorTrigger = Inputs.button(md`throw an error`, { required: true })
 
-// PATTERN WERE I EXPOSE THE DOM SEPARATELY
+// Expose the input element separately from the view so that we can use it to dispatch events and add listeners
 const errorTriggerElement = Inputs.button(html`throw an error`, { required: true });
 
-// The generator serves no purpose here.
-const errorTriggerGenerator = Generators.input(errorTriggerElement);
-
 const errorTrigger = view(Inputs.bind(Inputs.button(html`throw an error`, { required: true }), errorTriggerElement));
-```
-
-```js
-// view doesn't work here; it results in the error 'TypeError: errorTrigger.dispatchEvent is not a function'
-//const errorTrigger = view(errorTriggerElement)
 ```
 
 ```js echo
 display(errorTrigger);
 ```
 
-```js echo
+```js
+// For testing
 // This displays as true where we use the pattern of separating an input element with DOM from the generator.
-display(errorTriggerElement.dispatchEvent(new Event("input")))
+//display(errorTriggerElement.dispatchEvent(new Event("input")))
 ```
 
 
 ```js echo
-const errorCell = (() => {
-  errorTrigger;
+//const errorCell = (() => {
+//  errorTrigger;
   // Errors thrown here are picked up by catchAll
-  throw new Error("An error " + Math.random().toString(16).substring(3));
+//  throw new Error("An error " + Math.random().toString(16).substring(3));
+//})();
+
+// Experimental:  We're updating the Mutable here.  This allows the errorLog to accumulate errors but it doesn't work with the testing portion. We'll need to revisit this approach later....
+
+const errorCell = (() => {
+  try {
+    // make this cell depend on errorTrigger
+    if (errorTrigger) {
+      throw new Error("An error " + Math.random().toString(16).slice(3));
+    }
+    return "Click the button to throw.";
+  } catch (reason) {
+    // call the setter function for the Mutable
+    appendError({ cellName: "errorCell", reason: String(reason) });
+    throw reason; // show the error message
+  }
 })();
+
 display(errorCell)
 ```
 
 
 ```js echo
-// We're still not accumulating errors in the log.  Investigate how we're setting the mutable.
 display(errorLog);
 ```
 
@@ -100,10 +110,7 @@ view(Inputs.table(errorLog))
 const catchAll = (handler, invalidation) => {
   const listener = () => handler("unknown", error.value);
 
-  // Listen on the element
   error.addEventListener("input", listener);
-// this doesn't work because no cells resolve.
-//  errorElement.addEventListener("input", listener);
   if (invalidation)
     invalidation.then(() => {
       error.removeEventListener("input", listener);
@@ -112,9 +119,18 @@ const catchAll = (handler, invalidation) => {
 display(catchAll);
 ```
 
+
+```js echo
+display(errorLog);
+```
+
+
 ```js echo
 let errorLog = Mutable([]);
+const appendError = (entry) => (errorLog.value = [...errorLog.value, entry]);
+```
 
+```js echo
 // update the mutable using .value
 catchAll((cellName, reason) => {
   errorLog.value = errorLog.value.concat({
@@ -127,23 +143,7 @@ catchAll((cellName, reason) => {
 
 
 ```js echo
-display(errorLog);
-```
-
-```js echo
-display(errorLog.value);
-```
-
-
-
-
-
-
-```js echo
-// Experimenting here in changing to an element that later gets rendered as a view of generated.  So far this approach doesn't seem to work because a subsequent call to display(error) doesn't resolve (spinning wheel).
-
-//const errorElement = (() => {
-// When I try to use errorElement in 'catchAll`, the cells get locked up and stop rendering.
+// In the original notebook, this element is defined as a 'viewof'
 
 const error = (() => {
   const view = Inputs.input();
@@ -176,56 +176,9 @@ const error = (() => {
   }
   return view;
 })();
-
-//display(error);
-
-// removing this - prevented everything from rendering
-//const errorGenerator = Generators.input(errorElement)
-//const error = Generators.input(errorElement)
-
-// this one didn't render downstream elements (spinning arrow)
-//const error = view(errorElement)
-
-// testing this just for fun
-//const error = Inputs.bind(errorGenerator, errorElement)
-```
-
-```js echo
 display(error);
 ```
 
-```js echo
-display(error.value)
-```
-
-
-```js echo
-view(error);
-```
-
-
-```js echo
-display(view(error));
-```
-
-
-```js echo
-//display(errorElement)
-```
-
-```js echo
-//display(errorElement.value)
-```
-
-
-```js echo
-//view(errorElement);
-```
-
-
-```js echo
-//display(view(errorElement));
-```
 
 
 
