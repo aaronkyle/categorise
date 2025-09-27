@@ -1,3 +1,6 @@
+// # DOM
+// Code in this notebook are derived from https://github.com/observablehq/stdlib/tree/main/src/dom
+
 var count = 0;
 
 function Id(id) {

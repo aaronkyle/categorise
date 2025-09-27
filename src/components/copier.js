@@ -1,5 +1,5 @@
 //# Copier
-//<!-- https://observablehq.com/@mbostock/copier -->
+// Code in this notebook are derived from https://observablehq.com/@mbostock/copier
 
 // Clipboard copy utility
 export const pbcopy = text => navigator.clipboard.writeText(text);

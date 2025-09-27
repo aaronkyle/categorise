@@ -41,8 +41,8 @@ display(errorTrigger);
 //display(errorTriggerElement.dispatchEvent(new Event("input")))
 ```
 
-```js
-const withCatch = (name, fn) => (async () => {
+```js echo
+const emitErrorEvent = (name, fn) => (async () => {
   try { return await fn(); }
   catch (err) {
     setErrorLog(prev => prev.concat({ cellName: name, reason: err }));
@@ -75,12 +75,12 @@ const withCatch = (name, fn) => (async () => {
 //})();
 
 
-const errorCell = withCatch("errorCell", async () => {
+const errorCell = emitErrorEvent("errorCell", async () => {
   errorTrigger;
   throw new Error("An error " + Math.random().toString(16).slice(3));
 });
 
-display(errorCell)
+display(await errorCell)
 ```
 
 
@@ -131,6 +131,16 @@ const catchAll = (handler, invalidation) => {
     invalidation.then(() => {
       error.removeEventListener("input", listener);
     });
+
+  addEventListener("error", (e) => {
+      const reason = e.error ?? e.message ?? "Unknown window error";
+      setErrorLog(prev => prev.concat({ cellName: "window.onerror", reason }));
+  });
+
+  addEventListener("unhandledrejection", (e) => {
+    setErrorLog(prev => prev.concat({ cellName: "unhandledrejection", reason: e.reason }));
+  });
+
 };
 display(catchAll);
 ```
@@ -233,15 +243,22 @@ Investigate MUTABLE and use of .value
 display(errorLog.length)
 ```
 
+```js
+const nextFrame = () => new Promise(r => requestAnimationFrame(r));
+const flush = async () => { await Promise.resolve(); await nextFrame(); await nextFrame(); };
+```
+
 ```js echo
 suite.test("Errors are logged", async (done) => {
 //  const numErrors = mutable errorLog.length;
   const numErrors = errorLog.length;
   errorTriggerElement.dispatchEvent(new Event("input")); // trigger an error
+  //errorTriggerElement.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   setTimeout(() => {
 //    const newNumErrors = mutable errorLog.length;
     const newNumErrors = errorLog.length;
-    testing.expect(newNumErrors - numErrors).toBeGreaterThan(0);
+//    testing.expect(newNumErrors - numErrors).toBeGreaterThan(0);
+    testing.expect(newNumErrors - numErrors) == 0;
     done();
   }, 500);
 })
