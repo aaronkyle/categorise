@@ -32,7 +32,7 @@ const getContext = () => {
   };
 }
 
-const Response = class {
+export const Response = class {
   constructor(req, done) {
     this.req = req;
     this.done = done;
@@ -139,7 +139,7 @@ const generateSessionId = (name) => {
     .join("");
 }
 
-const subdomain = (url) => {
+export const subdomain = (url) => {
   url = url || html`<a href="">`.href;
   const origin = location.origin;
   let match;

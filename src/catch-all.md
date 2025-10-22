@@ -108,13 +108,11 @@ view(Inputs.table(errorLog))
 
 ```js echo
 const catchAll = (handler, invalidation) => {
-  const listener = () => handler("unknown", error.value);
-
-  error.addEventListener("input", listener);
-  if (invalidation)
-    invalidation.then(() => {
-      error.removeEventListener("input", listener);
-    });
+  const listener = () => handler("unknown", error); // `error` is the latest reactive value
+  errorSource.addEventListener("input", listener);
+  if (invalidation) invalidation.then(() => {
+    errorSource.removeEventListener("input", listener);
+  });
 };
 display(catchAll);
 ```
