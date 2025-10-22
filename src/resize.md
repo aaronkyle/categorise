@@ -1,6 +1,13 @@
 # Resize FileAttachments on the fly with [serverless-cells](https://observablehq.com/@endpointservices/serverless-cells)
 
 
+<div class="tip">
+  This notebook ports to Observable Framework a notebook by Tom Larkworthy
+  <a href="https://observablehq.com/@endpointservices" target="_blank" rel="noopener noreferrer">@endpointservices</a> called <a href="https://observablehq.com/@endpointservices/serverless-cells" target="_blank" rel="noopener noreferrer">Resize FileAttachments on the fly with serverless-cells</a>. <br/>
+  All mistakes and deviations from the original are my own.
+</div>
+
+
 <mark>FileAttachments.image(...) supports props like width or style now, rendering this library pointless</mark> (there is some minor utility that this library does it server side so traffic is minimized, but it tends to be slow so I personally would still not use this method
 
 

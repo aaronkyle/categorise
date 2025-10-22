@@ -1,5 +1,11 @@
 # LocalFile
 
+<div class="tip">
+  This notebook ports to Observable Framework a notebook by Mike Bostock
+  <a href="https://observablehq.com/@mbostock" target="_blank" rel="noopener noreferrer">@mbostock</a> called <a href="https://observablehq.com/@mbostock/localfile" target="_blank" rel="noopener noreferrer">LocalFile</a>. <br/>
+  All mistakes and deviations from the original are my own.
+</div>
+
 <p style="background: #fffced; box-sizing: border-box; padding: 10px 20px;">***Update Oct. 2021:*** *Observable now supports [**file inputs**](/@observablehq/input-file)! This notebook will remain for history, but please upgrade to [Observable Inputs](/@observablehq/inputs).*</p>
 
 A hack to treat a local file as an Observable FileAttachment, so that you get all the same conveniences (*e.g.*, loading CSV or SQLite). Pass the *value* option to set the initial value to a file attachment.

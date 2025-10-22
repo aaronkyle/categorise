@@ -1,5 +1,11 @@
 # Lazy Download
 
+<div class="tip">
+  This notebook ports to Observable Framework a notebook by Mike Bostock
+  <a href="https://observablehq.com/@mbostock" target="_blank" rel="noopener noreferrer">@mbostock</a> called <a href="https://observablehq.com/@mbostock/lazy-download" target="_blank" rel="noopener noreferrer">Lazy Download</a>. <br/>
+  All mistakes and deviations from the original are my own.
+</div>
+
 An alternative to DOM.download that lazily computes the value to be downloaded, and allows the value to be specified asynchronously. However, the downside is that two clicks are required if the value is asynchronous: first to save the value, and then the second to download it.
 
 ```js

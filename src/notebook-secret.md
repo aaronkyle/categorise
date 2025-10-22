@@ -1,5 +1,11 @@
 # How to password protect a Notebook secret
 
+<div class="tip">
+  This notebook ports to Observable Framework a notebook by Tom Larkworthy
+  <a href="https://observablehq.com/@endpointservices" target="_blank" rel="noopener noreferrer">@endpointservices</a> called <a href="https://observablehq.com/@endpointservices/notebook-secret" target="_blank" rel="noopener noreferrer">How to password protect a Notebook secret</a>. <br/>
+  All mistakes and deviations from the original are my own.
+</div>
+
 I sometimes wish to hide a secret in a public notebook, for example, a [service account to run billable cloud commands](https://observablehq.com/@endpointservices/cache-bigquery). This notebook provides functionality to generate a password-protected encrypted payload, which is safe to save in a public notebook.
 
     ```

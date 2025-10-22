@@ -1,5 +1,11 @@
 # jest-expect-standalone@24.0.2
 
+<div class="tip">
+  This notebook ports to Observable Framework a notebook by Tom Larkworthy
+  <a href="https://observablehq.com/@tomlarkworthy" target="_blank" rel="noopener noreferrer">@tomlarkworthy</a> called <a href="https://observablehq.com/@tomlarkworthy/jest-expect-standalone" target="_blank" rel="noopener noreferrer">jest-expect-standalone@24.0.2</a>. <br/>
+  All mistakes and deviations from the original are my own.
+</div>
+
 ```
     ~~~js
     import {expect} from "@tomlarkworthy/jest-expect-standalone"

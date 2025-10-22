@@ -1,5 +1,13 @@
 # URL querystrings and hash parameters
 
+
+<div class="tip">
+  This notebook ports to Observable Framework a notebook by Jeremy Ashkenas
+  <a href="https://observablehq.com/@jashkenas" target="_blank" rel="noopener noreferrer">@jashkenas</a> called <a href="https://observablehq.com/@jashkenas/url-querystrings-and-hash-parameters" target="_blank" rel="noopener noreferrer">URL querystrings and hash parameters</a>. <br/>
+  All mistakes and deviations from the original are my own.
+</div>
+
+
 \`location.search\` and \`location.hash\` are now available for use in your notebooks (by being passed down from the parent frame). For example, click [this link](${
   new URL(document.baseURI).pathname
 }?one=1&two=2) to add a querystring to this notebook’s URL.
