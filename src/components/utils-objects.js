@@ -1,6 +1,8 @@
 //# Utilities: Objects
 
 
+import * as d3 from "npm:d3";
+
 //## Autotype
 
 

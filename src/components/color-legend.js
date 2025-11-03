@@ -6,7 +6,7 @@
 
 import { DOM } from "/components/DOM.js";
 
-
+import * as d3 from "npm:d3";
 
 //import { main,schemeBuReGnGr } from "@adb/data-vis-style-guide"
 import { main,schemeBuReGnGr } from "/components/data-vis-style-guide.js"

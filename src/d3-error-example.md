@@ -1,16 +1,10 @@
 # D3 error example
 
-
-
 <div class="tip">
 This notebook ports a notebook by Saneef H. Ansari [@saneef] called <a href="https://observablehq.com/https://observablehq.com/@saneef/radar-chart">Radar Chart</a>.  All mistakes and deviations from the original are my own.
 </div>
 
-```
-+--------------------------------------------------------------+
-|  — The following text/narrative is from the original —       |
-+--------------------------------------------------------------+
-```
+
 
 
 ```js echo
