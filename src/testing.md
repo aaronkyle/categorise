@@ -2,12 +2,15 @@
 
 
 <div class="tip">
-This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [Reactive Unit Testing and Reporting Framework](https://observablehq.com/@tomlarkworthy/testing).  All mistakes and deviations from the original are my own.
+This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called <a href="https://observablehq.com/@tomlarkworthy/testing">Reactive Unit Testing and Reporting Framework</a>.  All mistakes and deviations from the original are my own.
 </div>
 
+```
 +--------------------------------------------------------------+
 |  — The following text/narrative is from the original —       |
 +--------------------------------------------------------------+
+```
+
 
 ```js
 //const url = FileAttachment("noun_test_2404407.svg").url()
