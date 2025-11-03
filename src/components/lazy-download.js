@@ -1,24 +1,10 @@
-# Lazy Download
+//# Lazy Download
 
-An alternative to DOM.download that lazily computes the value to be downloaded, and allows the value to be specified asynchronously. However, the downside is that two clicks are required if the value is asynchronous: first to save the value, and then the second to download it.
 
-```js
 import * as Promises from "/components/promises.js"
-display(Promises)
-```
+import {html} from "htl";     
 
-```js echo
-download(async () => {
-  await Promises.delay(1000);
-  return new Blob(
-    [JSON.stringify({hello: "world"})], 
-    {type: "application/json"}
-  );
-})
-```
-
-```js echo
-function download(value, name = "untitled", label = "Save") {
+export function download(value, name = "untitled", label = "Save") {
   const a = html`<a><button></button></a>`;
   const b = a.firstChild;
   b.textContent = label;
@@ -49,4 +35,11 @@ function download(value, name = "untitled", label = "Save") {
 
   return a;
 }
-```
+
+download(async () => {
+  await Promises.delay(1000);
+  return new Blob(
+    [JSON.stringify({hello: "world"})], 
+    {type: "application/json"}
+  );
+})

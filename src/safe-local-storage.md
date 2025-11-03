@@ -1,21 +1,12 @@
 # Safe Local Storage
 
-<div class="tip">
-This notebook ports a notebook by Mike Bostock [@mbostock] called [Safe Local Storage](https://observablehq.com/@mbostock/safe-local-storage).  All mistakes and deviations from the original are my own.
-</div>
-
-+--------------------------------------------------------------+
-|  — The following text/narrative is from the original —       |
-+--------------------------------------------------------------+
-
-
 If a reader has localStorage disabled, simply referencing it will throw an error and prevent any downstream cells from running. This can break your notebook!
 
 If you import from this notebook instead, you’ll be able to use localStorage safely: if the reader has disabled local storage, you’ll get an in-memory storage instance that evaporates when the page is unloaded.
 
-\`\`\`js
-import {localStorage} from "@mbostock/safe-local-storage"
-\`\`\`
+        ```
+        import {localStorage} from "@mbostock/safe-local-storage"
+        ```
 
 Please note that this implementation does not support direct-setting of properties on localStorage; use the [Storage interface methods](https://html.spec.whatwg.org/multipage/webstorage.html#webstorage) instead.
 

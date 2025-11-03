@@ -123,7 +123,7 @@ ${keys.reduce((acc,k) => `${acc}--${k}: ${colors[k]};`, "")}
 }
 
 
-const loadStyles = () => {
+export const loadStyles = () => {
   let elements = new Set();
 
   function detach(elements) {

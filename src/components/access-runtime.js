@@ -4,10 +4,10 @@
 
 
 
-import { Mutable, Generators } from "@observablehq/stdlib";
+import { Mutable, Generators } from "observablehq:stdlib";
 
-import * as Inputs from "@observablehq/inputs";
-import * as htl from "htl";
+import * as Inputs from "npm:@observablehq/inputs";
+import * as htl from "npm:htl";
 
 export function view(element, display) {
   if (!display) throw new Error("view(element, display): missing display()");
@@ -35,21 +35,38 @@ export function display(el, parent = document.body) {
 
 //mutable recomputeTrigger = 0
 const recomputeTrigger = Mutable(0)
-const set_recomputeTrigger = (t) => recomputeTrigger.value = t;
+//const set_recomputeTrigger = (t) => recomputeTrigger.value = t;
+
+//const captureRuntime = new Promise(resolve => {
+//  const forEach = Set.prototype.forEach;
+//  Set.prototype.forEach = function(...args) {
+//    const thisArg = args[1];
+//    forEach.apply(this, args);
+//    if(thisArg && thisArg._modules) {
+//      Set.prototype.forEach = forEach;
+//      resolve(thisArg);
+//    }
+//  };
+  //mutable recomputeTrigger = mutable recomputeTrigger + 1;
+//  set_recomputeTrigger(recomputeTrigger + 1)
+//})
 
 const captureRuntime = new Promise(resolve => {
   const forEach = Set.prototype.forEach;
-  Set.prototype.forEach = function(...args) {
+  Set.prototype.forEach = function (...args) {
     const thisArg = args[1];
     forEach.apply(this, args);
-    if(thisArg && thisArg._modules) {
+    if (thisArg && thisArg._modules) {
       Set.prototype.forEach = forEach;
       resolve(thisArg);
     }
   };
-  //mutable recomputeTrigger = mutable recomputeTrigger + 1;
-  set_recomputeTrigger(recomputeTrigger + 1)
-})
+});
+
+// bump *after* runtime is available
+captureRuntime.then(() => {
+  recomputeTrigger.value = (recomputeTrigger.value ?? 0) + 1;
+});
 
 // const runtime = captureRuntime
 const runtime = await captureRuntime

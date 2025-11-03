@@ -6,7 +6,7 @@
 
 
 
-export const aws4fetch = async () => {
+export const aws4fetch = await (async () => {
   const response = await new Response(
     (
       await FileAttachment("aws4fetch.esm.js.gz").stream()
@@ -23,7 +23,7 @@ export const aws4fetch = async () => {
   } finally {
     URL.revokeObjectURL(objectURL); // Ensure URL is revoked after import
   }
-}
+})()
 
 export const AwsClient = aws4fetch.AwsClient
 
