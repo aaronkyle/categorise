@@ -1,5 +1,13 @@
 //# AWS Helpers
 
+/**
+* This notebook ports a notebook by Tom Larkworthy (@tomlarkworthy):
+* https://observablehq.com/@tomlarkworthy/aws
+*
+* All mistakes and deviations from the original are my own.
+*/
+
+
 import * as htl from "/components/htl@0.3.1.js";
 import * as Inputs from "/components/inputs_observable.js";
 import { Generators } from "observablehq:stdlib";
