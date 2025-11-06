@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@observablehq/framework": "^1.13.3",
-    "d3-require": "^1.3.0"
+    "d3-require": "^1.3.0",
+    "nanomorph": "^5.4.3"
   },
   "devDependencies": {
     "rimraf": "^5.0.5"

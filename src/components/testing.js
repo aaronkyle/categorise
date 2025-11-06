@@ -11,10 +11,17 @@
 
 
 /* External dependencies (browser ESM): htl (html template) + nanomorph (DOM diff) */
-import * as htl from "https://cdn.jsdelivr.net/npm/htl@0.3.1/+esm";
-import morph from "https://cdn.jsdelivr.net/npm/nanomorph@5.4.2/+esm";
-import require from "https://cdn.jsdelivr.net/npm/d3-require@1/+esm";
-import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.12/+esm";
+//import * as htl from "https://cdn.jsdelivr.net/npm/htl@0.3.1/+esm";
+import * as htl from "/components/htl@0.3.1.js";
+//import morph from "https://cdn.jsdelivr.net/npm/nanomorph@5.4.2/+esm";
+//import morph from "npm:nanomorph";
+import morph from "nanomorph";
+//import morph from "/components/nanomorph@5.4.2.js";
+//import {require} from "npm:d3-require";
+import { require } from "d3-require";
+//import require from "/components/d3-require.js";
+//import * as Inputs from "https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.12/+esm";
+import * as Inputs from "/components/inputs_observable.js";
 
 
 // Load Observable Inputs CSS inside module
@@ -284,7 +291,7 @@ const suite = createSuite({
 
 const JEST_EXPECT_STANDALONE_VERSION = "24.0.2"
 
-export const expect = (async () => {
+export const expect = await (async () => {
   console.log("loding expect");
   if (window.expect) return window.expect;
   return require(`jest-expect-standalone@${JEST_EXPECT_STANDALONE_VERSION}/dist/expect.min.js`).catch(() => {

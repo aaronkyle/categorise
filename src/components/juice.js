@@ -9,15 +9,17 @@ import { Generators } from "observablehq:stdlib";
 //import { view, variable } from "@tomlarkworthy/view"
 import { viewUI, variable } from "/components/view.js"
 
-import * as Inputs from "/components/inputs.js";
+import * as Inputs from "/components/inputs_observable.js";
 
-
+// ✅ add lodash-es imports
+import { get as lodashGet, update as lodashUpdate } from "npm:lodash-es";
+const _ = { get: lodashGet, update: lodashUpdate };
 
 
 //## Implementation
 
 
-const juice = (builder, targets = {}) => (...args) => {
+export const juice = (builder, targets = {}) => (...args) => {
   const result = proxyVariable({
     name: "result",
     get: () => viewUIElement.value,
@@ -82,13 +84,15 @@ function proxyVariable({ name = "variable", get, set } = {}) {
 
 //## fastest way to make UI components
 
-const profile = juice((name, age) => html`Your name is ${name} your age is ${age}`, {
-  name: "[0]", // we index into the ...arguments array
-  age: "[1]"
-})
+//const exampleElement = profile("tom", 21);
+
+//const profile = juice((name, age) => html`Your name is ${name} your age is ${age}`, {
+//  name: "[0]", // we index into the ...arguments array
+//  age: "[1]"
+//})
 
 
-Inputs.bind(Inputs.range([0, 99]), exampleElement.age)
+//Inputs.bind(Inputs.range([0, 99]), exampleElement.age)
 
 //## *juice* API
 
