@@ -1,6 +1,6 @@
 # AWS Helpers
 
-This notebook ports a notebook by <a href="https://observablehq.com/@mbostock">Tom Larkworthy @tomlarkworthy</a> called <a href="https://observablehq.com/@tomlarkworthy/aws">AWS</a>.
+This notebook ports a notebook by <a href="https://observablehq.com/@mbostock">Tom Larkworthy</a> [@tomlarkworthy] called <a href="https://observablehq.com/@tomlarkworthy/aws">AWS</a>.
 All mistakes and deviations from the original are my own.</div>
 
 ---
