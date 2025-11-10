@@ -101,42 +101,70 @@ export const saveCreds = Generators.input(saveCredsElement)
 //## Credentials
 
 
-export const credentials = Generators.observe((next) => {
-  const check = () => {
-    //const creds = viewof manualCredentials.value;
-    const creds = manualCredentials;
-    try {
-      expect(creds).toBeDefined();
-      const parsed = JSON.parse(creds);
-      expect(parsed).toHaveProperty("accessKeyId");
-      expect(parsed).toHaveProperty("secretAccessKey");
-      next(parsed);
-    } catch (err) {
-      //next(err);
-    }
-  };
+// --- Credentials wiring (replaces Generators.observe + invalidation) ---
 
-  // viewof manualCredentials.addEventListener('input', check);
-    manualCredentialsElement.addEventListener("input", check);
-  invalidation.then(() => {
-  // viewof manualCredentials.removeEventListener('input', check);
-    manualCredentialsElement.removeEventListener("input", check);
+export let credentials = null;        // last valid parsed creds
+export let mfaCode = "";              // exported for compatibility with your import line
+
+// Apply parsed credentials to AWS.config and refresh service clients
+function applyCredentials(parsed) {
+  // Support either {accessKeyId, secretAccessKey, sessionToken?}
+  const { accessKeyId, secretAccessKey, sessionToken, region } = parsed || {};
+
+  // Basic validation
+  if (!accessKeyId || !secretAccessKey) return;
+
+  AWS.config.update({
+    accessKeyId,
+    secretAccessKey,
+    ...(sessionToken ? { sessionToken } : {})
   });
 
-  check();
-});
+  // Keep a default region but allow override via JSON if provided
+  if (region) AWS.config.update({ region });
 
+  credentials = parsed;
 
+  // Recreate clients so they pick up any changed config immediately
+  iam = new AWS.IAM();
+  s3  = new AWS.S3({ region: AWS.config.region || REGION });
+  cloudFront = new AWS.CloudFront();
+}
 
-export const login = (() => {
-  AWS.config.credentials = credentials;
-})()
+// Parse textarea -> apply to AWS on load and on every input event
+function checkAndApply() {
+  const raw = manualCredentialsElement.value ?? manualCredentials; // either value path
+  try {
+    expect(raw).toBeDefined();
+    const parsed = JSON.parse(raw);
+    expect(parsed).toHaveProperty("accessKeyId");
+    expect(parsed).toHaveProperty("secretAccessKey");
+    applyCredentials(parsed);
+  } catch {
+    // silently ignore until valid JSON with required keys
+  }
+}
+
+// listen for changes
+manualCredentialsElement.addEventListener("input", checkAndApply);
+// initial apply
+checkAndApply();
+
+// --- Services & Helpers ---
+
+// Default region for S3 if user doesn't supply one in creds JSON
+export const REGION = "us-east-2";
+
+// NOTE: use 'let' so we can refresh instances when credentials/region change
+export let iam = new AWS.IAM();
+export let s3  = new AWS.S3({ region: AWS.config.region || REGION });
+export let cloudFront = new AWS.CloudFront();
 
 
 //# IAM
 
 
-export const iam = login || new AWS.IAM()
+//export const iam = login || new AWS.IAM()
 
 
 //##### Users
@@ -307,11 +335,9 @@ export const removeUserFromGroup = async (username, group) => {
 //# S3
 
 
-export const REGION = 'us-east-2'
+//export const REGION = 'us-east-2'
 
-
-
-export const s3 = login || new AWS.S3({ region: REGION })
+//export const s3 = login || new AWS.S3({ region: REGION })
 
 
 //### CORS
@@ -379,7 +405,7 @@ export const putObject = async (bucket, path, value, options) => {
 
 
 
-export const cloudFront = login || new AWS.CloudFront()
+// export const cloudFront = login || new AWS.CloudFront()
 
 
 
