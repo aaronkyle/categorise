@@ -1,5 +1,6 @@
 # Color Legend
 
+<!-- Refer to: https://observablehq.com/@categorise/color-legend-util -->
 
 ```js
 import { DOM } from "/components/DOM.js";

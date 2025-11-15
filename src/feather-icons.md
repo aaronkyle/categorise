@@ -1,10 +1,12 @@
 # Feather Icons
 
-<div class="tip">
+<div class="tip" label>
   This notebook ports to Observable Framework a notebook by Saneef H. Ansari
   <a href="https://observablehq.com/@saneef" target="_blank" rel="noopener noreferrer">@saneef</a> called <a href="https://observablehq.com/@saneef/feather-icons" target="_blank" rel="noopener noreferrer">Feather Icons</a>. <br/>
   All mistakes and deviations from the original are my own.
 </div>
+
+---
 
 [Feather Icons](https://feathericons.com/) is a open source collection of SVG icons.
 

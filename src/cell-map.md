@@ -1,6 +1,10 @@
 # cellMap
 ## computes the mapping of reactive variables to higher level notebook cells, grouped by module
 
+This is a port of an Observable notebook by <a href="https://observablehq.com/@tomlarkworthy">Tom Larkworthy</a> [@tomlarkworthy] called <a href="https://observablehq.com/@tomlarkworthy/cell-map">cellMap</a>. All mistakes and deviations from the original are my own.</div>
+
+---
+
 <!--
 https://observablehq.com/@tomlarkworthy/cell-map
 -->

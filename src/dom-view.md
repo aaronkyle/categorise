@@ -1,13 +1,10 @@
 # DOM view
 
-<div class="tip">
-This notebook ports a notebook by Tom Larkworthy [@tomlarkworthy] called [DOM view](https://observablehq.com/@tomlarkworthy/dom-view).  All mistakes and deviations from the original are my own.
+<div class="tip" label>
+This notebook ports a notebook by <a href="https://observablehq.com/@tomlarkworthy/">Tom Larkworthy</a> [@tomlarkworthy] called <a href="https://observablehq.com/@tomlarkworthy/dom-view">DOM view</a>.  All mistakes and deviations from the original are my own.
 </div>
 
-+--------------------------------------------------------------+
-|  — The following text/narrative is from the original —       |
-+--------------------------------------------------------------+
-
+---
 
 
 A view whose value is a DOM node, and whose view is a container of that value. 

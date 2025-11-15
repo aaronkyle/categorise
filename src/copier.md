@@ -1,6 +1,5 @@
 # Copier
 
-
 <div class="tip">
 This notebook ports a notebook by Mike Bostock [@mbostock] called <a href="https://observablehq.com/@mbostock/copier">Copier</a>.  All mistakes and deviations from the original are my own.
 </div>

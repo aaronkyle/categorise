@@ -1,385 +1,505 @@
-   @charset "UTF-8";
+/* ------------------------------------------------------------------ */
+/*  Bring in Framework base + theme, then our custom font             */
+/* ------------------------------------------------------------------ */
 
-/* Keep Framework’s defaults + chosen themes */
 @import url("observablehq:default.css");
-@import url("observablehq:theme-air.css");   /* or theme-near-midnight, etc. */
-@import url("observablehq:theme-wide.css");  /* optional layout helper */
+@import url("observablehq:theme-air.css");
+@import url("observablehq:theme-near-midnight.css");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap");
 
-/* Your font (use HTTPS) */
-        @import url("http://fonts.googleapis.com/css?family=Lato:300,400,900");
+/* ------------------------------------------------------------------ */
+/*  Global-ish variables & font tweaks (theme-aware)                  */
+/* ------------------------------------------------------------------ */
 
-        body {
-            /*font-family: 'Georgia', serif;*/
-            font-family: 'Lato', sans-serif;
-            font-size: 15pt;
-            font-weight: 300;
-            letter-spacing: 0.025em;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
+:root {
+  /*--hero-min-h: 100svh;*/
+  --hero-min-h: 62svh;
+  --categori-pad: clamp(16px, 3vw, 32px);
+  --categori-accent: #563559;
+  --categori-accent-soft: rgba(229, 185, 210, 0.72);
 
-        a {
-            -moz-transition: all 0.2s ease-in-out;
-            -webkit-transition: all 0.2s ease-in-out;
-            -o-transition: all 0.2s ease-in-out;
-            -ms-transition: all 0.2s ease-in-out;
-            transition: all 0.2s ease-in-out;
-            /*color: #3fb1a3;*/
-            /*color: rgba(61, 38, 52, 0.65);*/
-            color: rgba(229, 185, 210, 0.72);
-            text-decoration: none;
-            border-bottom: dotted 1px;
-        }
+  /* Nudge Framework fonts toward your original choices */
+  --sans-serif-font: "Lato", system-ui, -apple-system, sans-serif;
+  --serif-font: "Georgia", "Times New Roman", serif;
+}
 
-        .nav {
-            position: sticky;
-            top: 0;
-            background-color: #333;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            z-index: 1000;
-        }
 
-        .nav .site-name {
-            font-size: 0.9em;
-            font-weight: 500;
-            text-transform: none;
-            /* Ensure the title is not uppercased */
-        }
+/* ------------------------------------------------------------------ */
+/*  Font application: sans for body text, serif for headings          */
+/* ------------------------------------------------------------------ */
 
-        .nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 8px;
-            font-size: 0.8em;
-            font-weight: 500;
-            padding: 8px 8px;
-            /* Add padding to make room for the border */
-            text-transform: uppercase;
-            /* Uppercase the navigation links */
-        }
+/* Main content area: default to sans-serif */
+body,
+#observablehq-main,
+#observablehq-main .prose,
+.categori-section,
+.categori-projects,
+.categori-card,
+.categori-card__description,
+.categori-page-nav,
+.categori-page-nav__links a,
+.hero__tagline,
+.categori-section p {
+  font-family: var(--sans-serif-font);
+}
 
-        .nav a:hover,
-        .nav a.active {
-            border: solid 1px white;
-            /* Add solid border on hover or active */
-            border-radius: 0px;
-            /* Optional: Add border-radius for rounded corners */
-        }
-
-        /* Banner section styling */
-        /* Banner Keyframes */
-        @-moz-keyframes reveal-banner {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @-webkit-keyframes reveal-banner {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @-o-keyframes reveal-banner {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @-ms-keyframes reveal-banner {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        @keyframes reveal-banner {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* Banner Styling */
-        #banner {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background-attachment: scroll, scroll, scroll, fixed;
-            background-color: #645862;
-            background-image: url("https://categori.se/css/images/light-bl.svg"), url("https://categori.se/css/images/light-br.svg"), url("https://categori.se/css/images/overlay.png"), url("https://s3.amazonaws.com/categori.se/home/images/banner.jpg");
-            background-position: bottom left, bottom right, top left, top center;
-            background-repeat: no-repeat, no-repeat, repeat, no-repeat;
-            background-size: 15em, 15em, auto, cover;
-            color: white;
-            cursor: default;
-            padding: 0;
-            text-align: center;
-            display: flex;
-            align-items: flex-start;
-            /* Adjusted to move the text higher */
-            justify-content: center;
-            overflow: hidden;
-            padding-top: 28vh;
-            /* Add some padding if needed */
-        }
+/* Headings that should stay serif */
+.hero__title,
+.categori-section h1,
+.categori-projects__heading,
+.categori-card h3 {
+  font-family: var(--serif-font);
+}
 
 
 
-        #banner::before {
-            content: '';
-            position: absolute;
-            /*top: 0;*/
-            /*left: 0;*/
-            /*width: 100%;*/
-            /*height: 100%;*/
-            /*background: rgba(0, 0, 0, 0.5); /* Transparent black overlay */
-            z-index: 1;
-        }
 
-        #banner .inner {
-            position: relative;
-            z-index: 2;
-            background: rgba(63, 50, 58, 0.5);
-            padding-top: 2.8em;
-            padding-bottom: 1.8em;
-            padding-right: 2.8em;
-            padding-left: 2.8em;
-            text-align: center;
-            animation: reveal-banner 1s 0.25s ease-in-out;
-            animation-fill-mode: forwards;
-            display: inline-block;
-        }
+/* ------------------------------------------------------------------ */
+/*  Make our “full-bleed” sections fill the main content column       */
+/*  (no 100vw: we don’t want to slide under the sidebar)               */
+/* ------------------------------------------------------------------ */
 
-        #banner .inner header {
-            border-bottom: solid 1px white;
-            border-top: solid 1px white;
-            margin: 0 0 1em 0;
-            padding: 3px 0;
-        }
+.observablehq-main .prose > .full-bleed {
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
 
-        #banner .inner header h2 {
-            border-bottom: solid 1px white;
-            border-top: solid 1px white;
-            font-family: 'Georgia', serif;
-            font-size: 2.5em;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            margin: 0;
-            padding-left: 0.05em;
-            position: relative;
-            /*text-transform: uppercase;*/
-        }
+/* ------------------------------------------------------------------ */
+/*  Page-level sticky nav (inside main content, below Framework nav)  */
+/* ------------------------------------------------------------------ */
 
-        #banner .inner p {
-            letter-spacing: 0.1em;
-            margin: 0;
-            text-transform: uppercase;
-        }
+.observablehq-main .prose .categori-page-nav {
+  margin-inline: -1.5rem;
+  padding-inline: 1.5rem;
+  max-width: none;
+}
 
-        #banner .inner p a {
-            color: inherit;
-            font-weight: 400;
-            text-decoration: none;
-        }
+.categori-page-nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
 
-        #banner .inner footer {
-            margin: 2em 0 0 0;
-        }
+  background: #333; /* like your original .nav */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-block: 0.4rem;
+}
 
+.categori-page-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
 
-        .section {
-            background-color: #333;
-            min-height: 100vh;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+.categori-page-nav__brand {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: #fff;
+}
 
-        .intro {
-            background-color: #333;
-            color: white;
-        }
+.categori-page-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
 
-        .closing {
-            background-color: #f5f5f5;
-            /*color: #333;*/
-            color: #4d2c3dde;
-        }
+/* Pinkish link style, scoped so we don't touch sidebar/global nav */
+.categori-page-nav__links a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
 
-        .container {
-            max-width: 1200px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-        }
+  padding: 0.35rem 0.75rem;
+  border-radius: 0;
+  border: 1px solid transparent;
 
-        .card {
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0px 20px 30px 20px;
-    margin-bottom: 20px;
-    display: flex;
+  color: #fff;
+}
+
+.categori-page-nav__links a:hover,
+.categori-page-nav__links a:focus-visible {
+  border-color: #fff;
+}
+
+/* Small-screen tweaks */
+@media (max-width: 640px) {
+  .categori-page-nav__inner {
     flex-direction: column;
-    width: 98%;
-    border: 1px solid #e5e5e5;
-    position: relative;
-    box-sizing: border-box;
-}
-
-.card h3 {
-    font-size: 1.5em;
-    margin-bottom: 0px;
-    color: #4d2c3dde;
-    font-weight: 700;
-    text-align: left;
-    cursor: pointer;
-    min-height: 2.5em;
-    line-height: 1.2em;
-    overflow-wrap: break-word;
-    flex-grow: 1;
-}
-
-.card .content {
-    display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 0px;
-    flex-wrap: nowrap;
-    width: 100%;
+  }
 }
 
-.card img {
-    width: calc(100% - 52px);
-    height: auto;
-    border-radius: 4px;
-    object-fit: cover;
-    cursor: pointer;
-    flex-shrink: 0;
+/* ------------------------------------------------------------------ */
+/*  Hero banner – closely matching your #banner styles                */
+/* ------------------------------------------------------------------ */
+
+.full-bleed.hero {
+  position: relative;
+  min-height: var(--hero-min-h);
+  display: flex;
+  align-items: flex-start;  /* text sits a bit higher */
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+
+  background-attachment: scroll, scroll, scroll, fixed;
+  background-color: #645862;
+  background-image:
+    url("https://categori.se/css/images/light-bl.svg"),
+    url("https://categori.se/css/images/light-br.svg"),
+    url("https://categori.se/css/images/overlay.png"),
+    url("https://s3.amazonaws.com/categori.se/home/images/banner.jpg");
+  background-position: bottom left, bottom right, top left, top center;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat;
+  background-size: 15em, 15em, auto, cover;
+  color: white;
+  cursor: default;
+  text-align: center;
+  padding-top: 28vh;  /* mimic original vertical placement */
 }
 
-.card .description {
-    margin-top: 10px;
-    text-align: left;
-    flex-basis: 100%;
+.full-bleed.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, black 45%, transparent);
+  z-index: 0;
 }
 
-.card .icons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-left: auto; /* Ensures the icons are aligned to the right */
-    align-self: flex-start;
-    flex-shrink: 0;
-    width: 42px;
-    padding-right: 0px;
+/* “inner” banner block */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: min(48rem, 90vw);
+  padding-top: 2.8em;
+  padding-bottom: 1.8em;
+  padding-inline: 2.8em;
+  text-align: center;
+
+  background: rgba(63, 50, 58, 0.5);
+  border-radius: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+
+  animation: reveal-banner 1s 0.25s ease-in-out forwards;
 }
 
-.card .icons img {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    object-fit: contain;
+/* Header within hero */
+.hero__title {
+  font-family: var(--serif-font);
+  font-size: 2.5em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin: 0 0 1em;
+  padding-block: 0.3rem;
+
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
 }
 
-.card p {
-    font-size: 1em;
-    color: #666;
-    text-align: left;
-    margin-bottom: 0;
+.hero__tagline {
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 0.9rem;
 }
 
-/* Responsive adjustments */
+/* Local nav inside hero */
+.hero__nav {
+  margin-top: 1.75rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hero__nav a {
+  -moz-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+
+  padding: 0.4rem 0.85rem;
+  border-radius: 0;
+  border: 1px dotted rgba(255, 255, 255, 0.9);
+  color: white;
+}
+
+.hero__nav a:hover {
+  border-style: solid;
+}
+
+/* Banner keyframes from original */
+@keyframes reveal-banner {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Intro & closing sections                                          */
+/* ------------------------------------------------------------------ */
+
+.categori-section {
+  margin-block: 2.5rem;
+  padding: 40px;
+  border-radius: 0;
+  /*min-height: 100vh;*/
+  min-height: 85vh;
+
+  display: flex;
+  flex-direction: column;     /* ⬅️ stack children vertically */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Optional: keep text from getting too wide */
+.categori-section > * {
+  max-width: 42rem;
+}
+
+.categori-section h1 {
+  font-size: 1.6rem;
+  margin: 0 0 0.75rem;
+}
+
+.categori-section p {
+  margin: 0.25rem 0;
+}
+
+/* Dark intro like your .intro section */
+.categori-intro {
+  background-color: #333;
+  color: white;
+}
+
+/* Light closing like your .closing */
+.categori-closing {
+  background-color: #f5f5f5;
+  color: #4d2c3dde;
+}
+
+/* Links in your sections: dotted underline + pink accent */
+.categori-section a {
+  -moz-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+
+  color: rgba(229, 185, 210, 0.72);
+  text-decoration: none;
+  border-bottom: dotted 1px;
+}
+
+.categori-section a:hover {
+  color: var(--categori-accent);
+  border-bottom-style: solid;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Projects grid & cards – your original .card styles, scoped        */
+/* ------------------------------------------------------------------ */
+
+.categori-projects {
+  margin-block: 2.5rem;
+}
+
+.categori-projects__heading {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.categori-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* card shell */
+.categori-card {
+  /*background-color: #fff;*/
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 20px 30px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 98%;
+  border: 1px solid #e5e5e5;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.categori-card h3 {
+  font-size: 1.5em;
+  margin-bottom: 0;
+  /*color: #4d2c3dde;*/
+  /*color: #907394;*/
+  color: #70525e;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  min-height: 2.5em;
+  line-height: 1.2em;
+  overflow-wrap: break-word;
+  flex-grow: 1;
+}
+
+.categori-card__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 0;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.categori-card img {
+  width: calc(100% - 52px);
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.categori-card__description {
+  margin-top: 10px;
+  text-align: left;
+  flex-basis: 100%;
+  font-size: 1em;
+  color: #666;
+}
+
+.categori-card__icons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-left: auto;
+  align-self: flex-start;
+  flex-shrink: 0;
+  width: 42px;
+  padding-right: 0;
+}
+
+.categori-card__icons img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  object-fit: contain;
+}
+
+/* default: image leaves room for icons */
+.categori-card__content .categori-card__image {
+  width: calc(100% - 52px);
+}
+
+/* when there is no icon column, image can take full width */
+.categori-card__content:not(:has(.categori-card__icons)) .categori-card__image {
+  width: 100%;
+}
+
+/* Responsive adjustments (same breakpoints as original) */
 @media (max-width: 575.98px) {
-    .card {
-        padding: 10px;
-    }
+  .categori-card {
+    padding: 10px;
+  }
 
-    .card h3 {
-        font-size: 1.3em;
-    }
+  .categori-card h3 {
+    font-size: 1.3em;
+  }
 
-    .card img {
-        width: calc(100% - 42px);
-    }
+  .categori-card img {
+    width: calc(100% - 42px);
+  }
 
-    .card .icons {
-        margin-left: auto;
-    }
+  .categori-card__icons {
+    margin-left: auto;
+  }
 
-    .card p {
-        font-size: 0.9em;
-    }
+  .categori-card__description {
+    font-size: 0.9em;
+  }
+
+  .hero__content {
+    margin-inline: 1rem;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-    .card {
-        padding: 15px;
-    }
+  .categori-card {
+    padding: 15px;
+  }
 
-    .card h3 {
-        font-size: 1.4em;
-    }
+  .categori-card h3 {
+    font-size: 1.4em;
+  }
 
-    .card p {
-        font-size: 0.95em;
-    }
+  .categori-card__description {
+    font-size: 0.95em;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-    .card {
-        padding: 20px;
-    }
+  .categori-card {
+    padding: 20px;
+  }
 
-    .card h3 {
-        font-size: 1.4em;
-    }
+  .categori-card h3 {
+    font-size: 1.4em;
+  }
 
-    .card p {
-        font-size: 0.95em;
-    }
+  .categori-card__description {
+    font-size: 0.95em;
+  }
 }
 
 @media (min-width: 992px) {
-    .card {
-        flex: 1 1 calc(33.333% - 20px);
-        max-width: calc(33.333% - 20px);
-    }
+  .categori-card {
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+  }
 }
 
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
+/* ------------------------------------------------------------------ */
+/*  Dark-mode nudges (on top of theme-air’s own dark palette)         */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-color-scheme: dark) {
+  .categori-page-nav {
+    background: #1e1e1e;
+    border-bottom-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .categori-intro {
+    background-color: #161616;
+  }
+
+  .categori-closing {
+    /*background-color: #201419;*/
+    background-color: #412f36;
+    color: #f3e7ee;
+  }
+
+  .categori-card {
+    background-color: #1b1b1b;
+    border-color: #333;
+  }
+
+  .categori-card__description {
+    color: #ccc;
+  }
 }

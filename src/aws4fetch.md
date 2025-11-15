@@ -1,5 +1,9 @@
 # [aws4fetch](https://github.com/mhart/aws4fetch)
 
+This is a port of an Observable notebook by <a href="https://observablehq.com/@tomlarkworthy">Tom Larkworthy</a> [@tomlarkworthy] called <a href="https://observablehq.com/@tomlarkworthy/aws4fetch">aws4fetch</a>. All mistakes and deviations from the original are my own.</div>
+
+---
+
 ```
 ~~~js
     import {AwsClient, AwsV4Signer} from '@tomlarkworthy/aws4fetch'

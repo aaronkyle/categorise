@@ -1,10 +1,12 @@
 # CORS Proxy _fetchp_
 
-<div class="tip">
+<div class="tip" label>
   This notebook ports to Observable Framework a notebook by Tom Larkworthy
   <a href="https://observablehq.com/@tomlarkworthy" target="_blank" rel="noopener noreferrer">@tomlarkworthy</a> called <a href="https://observablehq.com/@tomlarkworthy/fetchp" target="_blank" rel="noopener noreferrer">CORS Proxy fetchp</a>. <br/>
   All mistakes and deviations from the original are my own.
 </div>
+
+---
 
 A drop in replacement for [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) that uses a proxy to get around CORS and can optionally mixin [secrets](https://observablehq.com/@endpointservices/secrets) into URL parameters and Basic Auth. Retries with exponential backoff in the case of 429 response code.
 

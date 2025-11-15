@@ -1,6 +1,6 @@
 # AWS Helpers
 
-This is a port of an Observable notebook by <a href="https://observablehq.com/@mbostock">Tom Larkworthy</a> [@tomlarkworthy] called <a href="https://observablehq.com/@tomlarkworthy/aws">AWS Helpers</a>. All mistakes and deviations from the original are my own.</div>
+This is a port of an Observable notebook by <a href="https://observablehq.com/@tomlarkworthy">Tom Larkworthy</a> [@tomlarkworthy] called <a href="https://observablehq.com/@tomlarkworthy/aws">AWS Helpers</a>. All mistakes and deviations from the original are my own.</div>
 
 ---
 

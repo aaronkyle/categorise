@@ -1,8 +1,7 @@
 ---
-style: styles/categori-se.css
+//style: styles/categori-se.css
 ---
 
-```html
 <body>
     <div class="nav">
         <div class="site-name">categori.se</div>
@@ -41,7 +40,7 @@ style: styles/categori-se.css
     </div>
 
 </body>
-```
+
 
   ```js echo
         // Data for page content
@@ -55,7 +54,10 @@ style: styles/categori-se.css
                 "text": "<p>Thanks for visiting <strong>categori.se</strong>.<br> <p><strong>Please <a href='mailto:aaron@categori.se' style='color: #563559;''>reach out</a> if you would like to collaborate on a research project—especially those related to <strong>OpenSource software development</strong> or <strong>applied environmental and social science research</strong>.</p>"
             }
         };
+        display(pageContent)
+```
 
+```js echo
         // Data for the projects/cards
         const projectData = [
             {
@@ -266,16 +268,20 @@ style: styles/categori-se.css
                 "imageUrl": ""
             },
         ];
+                display(projectData)
 ```
 
 ```js echo
     // Data for navigation links
-       const navLinks = [
+    const navLinks = [
         { "name": "Hej!", "link": "#intro" },
         { "name": "Utforska", "link": "#projects" },
         { "name": "Vi Ses", "link": "#closing" }
       ];
+      display(navLinks)
 ```
+
+
 
 ```js echo
     // Function to set HTML content for sections
@@ -286,6 +292,8 @@ style: styles/categori-se.css
         // Populate introduction and closing sections
         setHTMLContent('intro', pageContent.introduction.title, pageContent.introduction.text);
         setHTMLContent('closing', pageContent.closing.title, pageContent.closing.text);
+        ;
+      display(setHTMLContent)
 ```
 
 ```js echo
@@ -299,11 +307,16 @@ style: styles/categori-se.css
             navLink.textContent = link.name;
             container.appendChild(navLink);
         });
-        }
+        };
+display(createNavLinks)
+```
 
+```js echo
         // Populate navigation links
-        createNavLinks('nav-links', navLinks);
+    display(createNavLinks('nav-links', navLinks));
+```
 
+```js echo
         // Function to create portfolio cards
         function createPortfolioCards(containerId, projects) {
             const container = document.getElementById(containerId);
@@ -373,9 +386,11 @@ style: styles/categori-se.css
                 // Append each card to the card container
                 cardContainer.appendChild(card);
             });
-        }
+        };
+        display(createPortfolioCards)
+```
 
+```js echo
         // Populate portfolio cards
         createPortfolioCards('portfolio-container', projectData);
-
 ```
