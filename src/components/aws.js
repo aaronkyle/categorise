@@ -7,6 +7,7 @@
 * All mistakes and deviations from the original are my own.
 */
 
+import { Runtime, Inspector } from "@observablehq/runtime";
 
 import * as htl from "/components/htl@0.3.1.js";
 import * as Inputs from "/components/inputs_observable.js";
