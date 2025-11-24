@@ -7,9 +7,6 @@ https://github.com/observablehq/framework/discussions/2035
 
 ---
 
-
----
-
 In the notebook context, we can use an import statement to pull over all the functions we need, and they work to pass our credentials into AWS.
 
 For example, in https://observablehq.com/@categorise/surveyslate-designer-tools
@@ -29,7 +26,7 @@ Since we can't alias imports in Framework the same as we do in notebooks, we exp
 
 ```
 with {REGION as REGION} 
-``
+```
 
 -as this-
 
@@ -171,54 +168,120 @@ display(saveCreds);
 
 ---
 
-... Nope. This doesn't take us far enough.  The `iam` constructor does not see the credentials being passed to it just yet.
 
----
+... Nope. The `iam` constructor does not see the credentials being passed to it just yet (I can add a screenshot later.)
 
-
-```js echo
-///!!!!
-///RuntimeError: iam.getUser is not a function (see myTags)
-///!!!
-display(iam)
+```
+      ~~~js
+      const iam = login || new AWS.IAM();
+      display(iam)
+      ~~~
 ```
 
-```js echo
-///!!!!
-///RuntimeError: iam.getUser is not a function (see myTags)
-///!!!
-display(await getUser())
+```
+      ~~~js echo
+      const me = getUser()
+      display(await me)
+      ~~~
 ```
 
 ---
 
 We can take this a few steps further -- to see whether if we locally re-create the `iam`, `s3`, and `cloudFlare` configuration files these can play well with the other imported functions.
 
+
+```js echo
+const AWS = await import("https://unpkg.com/aws-sdk@2.983.0/dist/aws-sdk.min.js").then(() => window.AWS);
+display(AWS)
+```
+
+```js echo
+import {config} from '/components/survey-slate-configuration.js';
+import { expect } from '/components/testing.js';
+
+const credentials = Generators.observe((next) => {
+  const check = () => {
+    //const creds = viewof manualCredentials.value;
+    //const creds = manualCredentialsElement.value;
+    const creds = manualCredentials;
+    try {
+      expect(creds).toBeDefined();
+      const parsed = JSON.parse(creds);
+      expect(parsed).toHaveProperty("accessKeyId");
+      expect(parsed).toHaveProperty("secretAccessKey");
+      next(parsed);
+    } catch (err) {
+      //next(err);
+    }
+  };
+
+  // viewof manualCredentials.addEventListener('input', check);
+    manualCredentialsElement.addEventListener("input", check);
+  invalidation.then(() => {
+  // viewof manualCredentials.removeEventListener('input', check);
+    manualCredentialsElement.removeEventListener("input", check);
+  });
+
+  check();
+});
+```
+
+```js echo
+display(credentials)
+```
+
+
+```js echo
+const login = (async() => {
+  AWS.config.credentials = await credentials;
+})();
+```
+
+```js
+//display(login)
+```
+
+
+```js echo
+const iam = login || new AWS.IAM();
+display(iam)
+```
+
+```js echo
+const s3 = login || new AWS.S3({ region: REGION });
+display(s3)
+```
+---
+
+Looks promising! We can see that the credentials are set correctly.
+
+
 ----
 
 ```js echo
-const me = getUser()
+const me = getUser();
 display(await me)
 ```
 
 ```js echo
-const myTags = listUserTags(me.UserName)
+const myTags = await listUserTags(me.UserName);
+display(myTags)
 ```
 
-
 ```js echo
-const surveys = myTags['designer'].split(" ")
+const surveys = myTags['designer'].split(" ");
+display(surveys)
 ```
 
 ---
 
-My goal is to spare having to redefine all the AWS functions (as below) Since my functions worked in the deployed Framework data application context, I was hoping that there is some trick that would allow me to export functions in so that the notebook could be used to wire up the credentialing.
+Looks like this is about as far as I need to go to redefine all the AWS functions (below).  Good enough for now. 
 
 
 ---
 
 ```js echo
-import {listObjects, getObject, putObject, listUsers, createUser, deleteUser, getUser, listAccessKeys, createAccessKey, deleteAccessKey, mfaCode, listUserTags, tagUser, untagUser, iam, s3, listGroups, listGroupsForUser, addUserToGroup, removeUserFromGroup} from '/components/aws.js';
+import {listObjects, getObject, putObject, listUsers, createUser, deleteUser, getUser, listAccessKeys, createAccessKey, deleteAccessKey, mfaCode, listUserTags, tagUser, untagUser, listGroups, listGroupsForUser, addUserToGroup, removeUserFromGroup} from '/components/aws.js';
 ```
 
 
@@ -242,9 +305,6 @@ display(createUser)
 display(deleteUser)
 ```
 ```js echo
-///!!!!
-///RuntimeError: iam.getUser is not a function (see myTags)
-///!!!
 display(getUser)
 ```
 ```js echo
@@ -258,7 +318,7 @@ display(createAccessKey)
 display(deleteAccessKey)
 ```
 ```js echo
-/// We don't want to keep invoking it as it jumps across the DOM. We can bind it.
+/// Commenting this out here b/c we don't want to keep invoking it as it jumps across the DOM. We can bind it.
 ///display(manualCredentialsElement)
 ```
 ```js echo
