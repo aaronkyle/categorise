@@ -2,7 +2,7 @@
 
 
 ```js echo
-const genCell = view(Inputs.input())
+const genCell = view(Inputs.input(''))
 ```
 
 ```js echo
@@ -10,7 +10,7 @@ genCell.value
 ```
 
 ```js echo
-const anotherGenCellElement = Inputs.input()
+const anotherGenCellElement = Inputs.input('')
 display(anotherGenCellElement)
 ```
 
