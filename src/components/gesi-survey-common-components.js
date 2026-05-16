@@ -30,7 +30,6 @@ function md(strings) {
 }
 
 
-
 const getIconHtml = (name, klasses = "") => `<span class="icon ${klasses}">${getIconSvg(name, 24, {role: 'img'})}</span>`
 
 
@@ -40,7 +39,7 @@ const getIconHtml = (name, klasses = "") => `<span class="icon ${klasses}">${get
 //A textNodeView syncs its value to a simple textNode DOM element. Because its a view, it can be added to a view-literal expression in quite a simple way.
 
 
-const textNodeView = (value = '') => {
+export const textNodeView = (value = '') => {
   const node = document.createTextNode(value)
   return Object.defineProperty(node, 'value', {
     get: () => node.textContent,
@@ -123,7 +122,7 @@ const spinner = () => {
 ///!!!!!!!!!!!!!!!!!!!!!
 ///!!!!!!Changes introduced in attaching buttons back into the DOM. Verify.
 ///!!!!!!!!!!!!!!!!!!!!!
-const buttonLabel = ({label, iconLeft, iconRight, iconRightClass, iconLeftClass, ariaLabel}) => {
+export const buttonLabel = ({label, iconLeft, iconRight, iconRightClass, iconLeftClass, ariaLabel}) => {
   let labelHtml = "";
   if (iconLeft) {
     labelHtml += `${getIconHtml(iconLeft, `icon--sm ${iconLeftClass || ""}`)} `;
@@ -154,11 +153,11 @@ const buttonLabel = ({label, iconLeft, iconRight, iconRightClass, iconLeftClass,
 
 
 // Thanks @mootari, https://observablehq.com/@saneef/is-observable-inputs-style-able
-const ns = Inputs.text().classList[0]
+export const ns = Inputs.text().classList[0]
 
 
 
-const styles = html`<style>
+export const styles = html`<style>
   :root {
     --button-border-radius: var(--border-radius-2, 0.25rem);
     --border-color: #aaa; /* tachyons's light-silver */
@@ -275,7 +274,7 @@ const styles = html`<style>
 
   .card {
     display: block;
-    background: white;
+    //background: white;
     padding: 1rem; /* pa3 or --spacing-medium */
     border: 1px solid var(--border-color-light);
     border-radius: var(--border-radius-3);

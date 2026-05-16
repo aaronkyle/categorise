@@ -4,6 +4,18 @@ import {html} from "htl";
 
 const invalidation = { then: () => {} };
 
+const defaultOptions = {};
+
+const tachyonsVersion = "4.12.0"
+
+const cssVariables = (colors = {}) => {
+  const keys = Object.keys(colors);
+  if (!keys.length) return "";
+
+  const vars = keys.map(k => `  --${k}: ${colors[k]};`).join("\n");
+  return `:root {\n${vars}\n}`;
+};
+
 const tokens = ({
   spaces: {
     '0': '0', // none
@@ -22,7 +34,22 @@ const colorUtils = ({colors}) => {
 
   if (keys.length === 0) return "";
 
+    const cssVariables = `:root {
+    ${keys.reduce((acc,k) => `${acc}--${k}: ${colors[k]};`, "")}
+    }`
+        
+    const utilClasses = keys.reduce((acc, k) => {
+        return `${acc}
+    .${k} { color: var(--${k}); }
+    .hover-${k}:hover, .hover-${k}:focus { color: var(--${k}); }
+    .bg-${k} { background-color: var(--${k}); }
+    .hover-bg-${k}:hover, .hover-bg-${k}:focus { background-color: var(--${k}); }
+    .b--${k} { border-color: var(--${k}); }
+    `}, "")
 
+      return cssVariables + "\n" + utilClasses;
+}
+      
 const fontUtils = ({fonts}) => {
   const keys = Object.keys(fonts || {})
 
@@ -101,29 +128,8 @@ const scrollUtils = () =>`.no-scrollbar {
   display: none; // Safari and Chrome
 }`;
 
-const tachyonsVersion = "4.12.0"
 
-const defaultOptions = ({})
-
-
-const cssVariables = `:root {
-${keys.reduce((acc,k) => `${acc}--${k}: ${colors[k]};`, "")}
-}`
-    
-  const utilClasses = keys.reduce((acc, k) => {
-    return `${acc}
-.${k} { color: var(--${k}); }
-.hover-${k}:hover, .hover-${k}:focus { color: var(--${k}); }
-.bg-${k} { background-color: var(--${k}); }
-.hover-bg-${k}:hover, .hover-bg-${k}:focus { background-color: var(--${k}); }
-.b--${k} { border-color: var(--${k}); }
-`}, "")
-
-  return cssVariables + "\n" + utilClasses;
-}
-
-
-export const loadStyles = () => {
+export const loadStyles = (() => {
   let elements = new Set();
 
   function detach(elements) {
@@ -163,23 +169,12 @@ export const loadStyles = () => {
   
     attach(newStyleElements);
   }
-}
+})
 
 
 const tachyons = loadStyles // Original name, deprecated
 
 export const tachyonsExt = loadStyles
-
-
-loadStyles({
-  colors: {
-    brand: "#007DB7",
-    accent: "#FDB515"
-  },
-  fonts: {
-    roboto: `"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"`
-  },
-})
 
 const addElementsToDOM = (elements) => elements.forEach(n => document.querySelector("head").prepend(n));
 

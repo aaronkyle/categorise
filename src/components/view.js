@@ -10,6 +10,8 @@ import {Generators} from "observablehq:stdlib";
 import * as Inputs from "/components/inputs_observable.js";
 import { DOM } from "/components/DOM.js"
 
+import _ from "npm:lodash";
+
 import markdownit from "markdown-it";
 const Markdown = new markdownit({html: true});
 function md(strings) {
