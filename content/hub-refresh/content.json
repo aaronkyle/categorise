@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-27",
+  "homepage": {
+    "title": "Thoughtful design. Useful software. Connected data.",
+    "introduction": "We help organizations turn complex information and demanding workflows into clear, practical digital tools. Our work brings together design, application development, data integration, AI workflows and application architecture and security advice.",
+    "purpose": "We build tools that help people understand evidence, share knowledge and make informed decisions about the places and communities they care about.",
+    "primaryAction": {
+      "label": "Explore our work",
+      "href": "#work"
+    },
+    "secondaryAction": {
+      "label": "Discuss a project",
+      "href": "mailto:aaron@categori.se"
+    },
+    "navigation": [
+      "Work",
+      "Services",
+      "About",
+      "Notes",
+      "Contact"
+    ],
+    "about": "categori.se is a design and development practice led by Aaron Kyle Dennis. Our work connects experience in environmental and social development, research and development finance with software, geospatial analysis and information design. We work with specialists and collaborators to shape tools around the people who use them.",
+    "contact": "What are you trying to understand, connect or improve? Tell us who will use the tool, how the work happens today and what you would like to change. We can help define a focused review, a prototype or a broader implementation.",
+    "footerLinks": [
+      {
+        "label": "categori.se public projects",
+        "href": "https://github.com/categori-se"
+      },
+      {
+        "label": "Aaron's repositories",
+        "href": "https://github.com/aaronkyle"
+      }
+    ]
+  },
+  "services": [
+    {
+      "title": "Design and communication",
+      "description": "Make complex information easier to understand and act on through clear websites, usable interfaces, interactive reports, maps and data visualizations.",
+      "deliverables": [
+        "Interface and workflow design",
+        "Websites and interactive publications",
+        "Maps and data visualization"
+      ]
+    },
+    {
+      "title": "Application development",
+      "description": "Build practical tools around the way people work, from a focused prototype to a connected application with records, review and handover.",
+      "deliverables": [
+        "Custom web applications",
+        "Document and research workflows",
+        "Publishing and reporting tools"
+      ]
+    },
+    {
+      "title": "Data and AI integration",
+      "description": "Connect source systems and introduce AI where it can support a defined task. Keep source context, evaluation and human review connected to the result.",
+      "deliverables": [
+        "APIs and data pipelines",
+        "Searchable evidence and document collections",
+        "Model integration and evaluation workflows"
+      ]
+    },
+    {
+      "title": "Architecture and security advice",
+      "description": "Help teams make informed choices about application structure, access, sensitive information and operation, with recommendations they can implement and review.",
+      "deliverables": [
+        "Architecture and data-flow reviews",
+        "Access, credential and deployment design",
+        "Backup, recovery and operational planning"
+      ]
+    }
+  ],
+  "caseStudies": [
+    {
+      "id": "opengeo",
+      "name": "OpenGeo Studio",
+      "headline": "A shared utility for understanding places and sharing environmental and social evidence.",
+      "summary": "Geospatial tools for consultants, development-finance practitioners, borrowers, public institutions and the communities and stakeholders involved in development.",
+      "need": "Environmental and social questions cross institutional boundaries. Consultants gather evidence, borrowers manage projects, financiers review risk, governments assess proposals, and communities need information they can understand and question. Geographic information often arrives in separate files, reports and services, making its origin and meaning difficult to follow.",
+      "approach": "We developed OpenGeo as a shared utility for this wider community of practice. Studio brings source inspection, map composition, supported analysis and publication into a connected workspace. OpenGeo.Tools complements it with methods, datasets and worked examples. Reusable layers, styles and project records help carry useful work from one study to the next.",
+      "workflow": "Inspect a source and its limitations, bring selected data into a map, undertake a documented analysis, then publish an explanation with the relevant methods and attribution.",
+      "benefit": "The aim is to make environmental and social information easier to review, discuss and reuse across consulting, investment and public decision-making. Clear maps and inspectable sources can help stakeholders ask better questions and understand the evidence behind a finding.",
+      "status": "Early community source edition; account-free browser demo and limited cloud beta. Operations and deployment availability vary by workflow.",
+      "limits": "A shared utility does not make private project information public. Access, source rights and publication choices still apply. Maps and automated outputs require appropriate data and professional interpretation.",
+      "services": [
+        "Geospatial interface design",
+        "Data integration",
+        "Analysis and publishing workflows",
+        "Deployment and access architecture"
+      ],
+      "links": [
+        {
+          "label": "Explore OpenGeo.Tools",
+          "href": "https://opengeo.tools/"
+        },
+        {
+          "label": "Try Studio without an account",
+          "href": "https://demo.studio.opengeo.tools/"
+        },
+        {
+          "label": "Hosted Studio",
+          "href": "https://studio.opengeo.tools/"
+        },
+        {
+          "label": "Community source",
+          "href": "https://github.com/categori-se/opengeo-community"
+        }
+      ]
+    },
+    {
+      "id": "es-review",
+      "name": "E&S Review",
+      "headline": "Keep the evidence, the professional judgment and the follow-up connected.",
+      "summary": "A working record for environmental and social due diligence, action plans and monitoring across a project's life.",
+      "need": "An environmental and social assignment rarely ends with a report. Evidence changes, responsibilities pass between organizations, and corrective actions need to be followed into implementation. When documents, findings and commitments live in separate files, it becomes harder to explain a conclusion or establish what still needs attention.",
+      "approach": "We are building E&S Review around continuing projects and scoped engagements. Practitioners can organize permitted source documents, link findings to exact evidence, record uncertainty, assign actions and continue monitoring. Review stages and approved report baselines preserve the relationship between what was examined, what was decided and what was issued.",
+      "workflow": "Define an assignment, inspect evidence, record a reasoned finding, assign and monitor an action, then review and issue a report with its supporting record.",
+      "benefit": "For consultants, clients, financiers and monitoring teams, the intended benefit is continuity and accountability. A clearer record can help teams follow unresolved issues, explain decisions and retain commitments that matter to workers, communities and the environment.",
+      "status": "Hosted application and a public community core for controlled local evaluation. Optional configured AI can propose material for practitioner review.",
+      "limits": "Professional standards mappings, AI assessment quality and actual practitioner acceptance remain separate qualification work. Software checks do not validate a professional conclusion.",
+      "services": [
+        "Professional workflow design",
+        "Evidence and document integration",
+        "Reporting and template workflows",
+        "Review and access controls"
+      ],
+      "links": [
+        {
+          "label": "Explore E&S Review",
+          "href": "https://esia.categori.se/"
+        },
+        {
+          "label": "Try a synthetic assignment",
+          "href": "https://esia.categori.se/demo"
+        },
+        {
+          "label": "Community source",
+          "href": "https://github.com/categori-se/es-risk-management-core"
+        }
+      ]
+    },
+    {
+      "id": "veggie-farm",
+      "name": "Veggie.Farm",
+      "headline": "Explore a garden across the seasons, then bring what you learn back to the ground.",
+      "summary": "Developing digital garden models in the Berkshires to connect planting design, seasonal context and observations over time.",
+      "need": "A garden is always changing. A plan drawn in spring cannot by itself explain how planting, shade and the experience of a place vary through the year. Gardeners and landscape stewards need ways to connect design ideas with plant knowledge and what they observe on site.",
+      "approach": "Our Berkshire garden work explores digital twins: evolving digital representations that connect planting layouts, plant records, seasonal context and observations. Veggie.Farm's Garden Planning Studio provides synchronized 2D and 3D views, source-linked plant information and saved garden records. The goal is to support informed choices about landscaping, plant health and cultivation as the record develops.",
+      "workflow": "Arrange beds and plants, compare the plan in 2D and 3D, explore seasonal scenarios, and record observations that can inform the next revision.",
+      "benefit": "We want gardeners, landscape teams and garden visitors to understand how a place changes over time. Bringing data and practical observation together can support more informed planting and maintenance decisions and make garden knowledge easier to share.",
+      "status": "Working garden-planning application; Berkshire digital-twin work is exploratory. The public Berkshire Botanical Garden example is an incomplete illustrative reconstruction.",
+      "limits": "Seasonal previews and schematic plants are planning aids, not validated growth or plant-health predictions. The case study does not claim an institutional partnership, live sensor integration or measured horticultural outcomes.",
+      "services": [
+        "2D and 3D interaction design",
+        "Plant and geographic data integration",
+        "Seasonal planning tools",
+        "Observation and knowledge-sharing workflows"
+      ],
+      "links": [
+        {
+          "label": "Explore Veggie.Farm",
+          "href": "https://veggie.farm/"
+        },
+        {
+          "label": "Try Garden Planning Studio",
+          "href": "https://studio.veggie.farm/"
+        },
+        {
+          "label": "Source code",
+          "href": "https://github.com/categori-se/veggie-farm"
+        }
+      ]
+    },
+    {
+      "id": "ai-studio",
+      "name": "AI Studio",
+      "headline": "Keep a small team's projects moving across computers, models and sessions.",
+      "summary": "Building continuity between local workers, online projects and reviewed AI workflows.",
+      "need": "A small team may work across local editors, online repositories and several AI tools. Each change of environment can mean reconstructing instructions, finding earlier outputs or explaining why a decision was made. Trying another model becomes difficult when the project record belongs to a single chat.",
+      "approach": "We are building AI Studio first around our own team's needs: coordinating local workers and online projects while retaining project instructions, source references, outputs and review decisions. A shared project structure is intended to let us evaluate different models against the same tasks and criteria while maintaining continuity across workflows.",
+      "workflow": "Retain a project brief and source context, prepare a bounded task, inspect the output against shared criteria, record the review decision and carry the relevant history into the next session.",
+      "benefit": "The goal is to spend less effort reconstructing context and more effort doing useful work. A consistent project record can also make handover easier and help explain which model, source and review decision contributed to a result.",
+      "status": "Internal orchestration environment in development, with public contracts, local foundations and a synthetic browser tour. Broader model comparison is a development objective; the operating service has a specific configured model route.",
+      "limits": "The public tour uses mock assistants. Provider-neutral records do not promise identical model behavior, universal model availability, automatic synchronization or completed multi-user orchestration.",
+      "services": [
+        "AI workflow design",
+        "Provider adapter architecture",
+        "Local and web project continuity",
+        "Evaluation and review controls"
+      ],
+      "links": [
+        {
+          "label": "Explore the synthetic workspace tour",
+          "href": "https://categori-se.github.io/ai-studio-examples/"
+        },
+        {
+          "label": "Public examples",
+          "href": "https://github.com/categori-se/ai-studio-examples"
+        },
+        {
+          "label": "Local foundations",
+          "href": "https://github.com/categori-se/ai-studio-core"
+        },
+        {
+          "label": "Shared contracts",
+          "href": "https://github.com/categori-se/ai-studio-contracts"
+        }
+      ]
+    }
+  ],
+  "supportingProjects": [
+    {
+      "name": "Archive",
+      "summary": "Explore how a document collection can become a navigable workspace for finding and inspecting information.",
+      "href": "https://archive.categori.se/",
+      "sourceLinks": [],
+      "status": "Prototype; public sample and private workspace."
+    },
+    {
+      "name": "lng0",
+      "summary": "Turn source text into translation, flashcards and speech-practice material that people can return to.",
+      "href": "https://lng0.org/",
+      "sourceLinks": [],
+      "status": "Active prototype."
+    },
+    {
+      "name": "SurveySlate",
+      "summary": "Explore structured survey design and the administration workflows that help teams collect usable information.",
+      "href": "https://www.surveyslate.org/",
+      "sourceLinks": [
+        {
+          "label": "Source code",
+          "href": "https://github.com/aaronkyle/surveyslate"
+        }
+      ],
+      "status": "Prototype and interface reference."
+    },
+    {
+      "name": "Applied Anthro",
+      "summary": "Bring social-development concepts, institutional frameworks and practitioner resources into a readable research collection.",
+      "href": "https://applied-anthro.com/",
+      "sourceLinks": [
+        {
+          "label": "Research repository",
+          "href": "https://github.com/aaronkyle/social-development"
+        }
+      ],
+      "status": "Research and methods; retain page-level source context."
+    },
+    {
+      "name": "Map Folio",
+      "summary": "Explore how projections, composition and interaction shape the way readers understand a map.",
+      "href": "https://opengeo.tools/map-folio/",
+      "sourceLinks": [
+        {
+          "label": "Original experiment source",
+          "href": "https://github.com/aaronkyle/map-folio"
+        }
+      ],
+      "status": "Published OpenGeo work; linked repository is the original experiment."
+    }
+  ]
+}
